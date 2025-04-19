@@ -1,0 +1,43 @@
+<div class="container-fluid mt-4">
+  <h2 class="mb-4">Liste des utilisateurs</h2>
+
+  <!-- DataTable -->
+  <div class="card shadow mb-4">
+    <div class="card-header py-3">
+      <h6 class="m-0 font-weight-bold text-primary">Utilisateurs</h6>
+    </div>
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+          <thead>
+            <tr>
+              <th>Matricule</th>
+              <th>Nom</th>
+              <th>Prénom</th>
+              <th>Email</th>
+              <th>Rôle</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let user of utilisateurs">
+              <td>{{ user.matricule }}</td>
+              <td>{{ user.nom }}</td>
+              <td>{{ user.prenom }}</td>
+              <td>{{ user.email }}</td>
+              <td>{{ user.role }}</td>
+              <td>
+                <button class="btn btn-warning btn-sm m-1" (click)="editUser(user.id)">
+                  <span class="fas fa-edit"></span>
+                </button>
+                <button class="btn btn-danger btn-sm m-1" (click)="deleteUser(user.id)">
+                  <span class="fas fa-trash"></span>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

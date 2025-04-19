@@ -1,0 +1,33 @@
+/* Body - Enlever les marges par défaut et appliquer un display flex */
+body {
+  margin: 0;
+  display: flex;
+  height: 100vh;  /* Pour que l'écran prenne toute la hauteur */
+}
+
+/* Sidebar - Rendre le sidebar fixe sur la gauche */
+
+
+/* Le content wrapper pour occuper tout l'espace restant */
+#content-wrapper {
+  margin-left: 250px;  /* Décalage pour le sidebar */
+  width: calc(100% - 250px); /* Largeur du contenu restant */
+  padding: 20px; /* Ajouter un peu de padding autour du contenu */
+  height: 100vh;
+  overflow-y: auto;  /* Permet de faire défiler le contenu si nécessaire */
+}
+
+/* Pour la table et les autres contenus */
+.table {
+  width: 100%;
+  margin-top: 20px;
+}
+
+.table th, .table td {
+  padding: 15px;
+  text-align: center;
+}
+
+button {
+  margin-right: 10px;
+}

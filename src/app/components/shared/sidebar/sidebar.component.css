@@ -1,0 +1,39 @@
+/* Sidebar Styles */
+.sidebar {
+  position: fixed;
+  width: 250px;
+  height: auto;
+  top: 0;
+  left: 0;
+  background: linear-gradient(180deg, #007bff 10%, #6c757d 100%);
+  padding-top: 30px;
+  color: white;
+}
+
+.sidebar a {
+  text-decoration: none;
+  color: white;
+  padding: 10px;
+  display: block;
+}
+
+
+/* Content wrapper styles */
+#content-wrapper {
+  margin-left: 250px; /* Décalage pour que le contenu commence après le sidebar */
+  padding: 20px;
+  height: 100vh;
+  overflow-y: auto;
+}
+
+/* Responsive: Quand la largeur de l'écran est petite (mobile) */
+@media (max-width: 768px) {
+  .sidebar {
+    width: 100%; /* Prendre toute la largeur de l'écran sur mobile */
+    height: auto;
+  }
+  
+  #content-wrapper {
+    margin-left: 0;  /* Le contenu prend toute la largeur sur mobile */
+  }
+}
