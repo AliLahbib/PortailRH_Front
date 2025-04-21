@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 declare var $: any;
 
 @Component({
@@ -7,7 +8,9 @@ declare var $: any;
   styleUrls: ['./sidebar.component.css']
 })
 export class SidebarComponent  implements OnInit {
-  constructor() { }
+  constructor(
+    private router: Router
+  ) { }
 
 
 
@@ -17,5 +20,7 @@ export class SidebarComponent  implements OnInit {
       $('body').toggleClass('sidebar-toggled'); // Optionnel, pour gérer le décalage du contenu principal
     });
   }
+
+  
 
 }

@@ -13,7 +13,6 @@ const routes: Routes = [
   { path: 'users/edit', component: EditUserComponent },
   { path: 'users/edit/:id', component: EditUserComponent },
 
-
   { path: '**', redirectTo: '' }, // Catch-all (404)
 ];
 
