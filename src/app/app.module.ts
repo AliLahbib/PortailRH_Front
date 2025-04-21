@@ -8,8 +8,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HomeComponent } from './components/home/home.component';
 import { EditUserComponent } from './components/users/edit-user/edit-user.component';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { NavbarComponent } from './components/shared/navbar/navbar.component';
+import {  HttpClientModule } from '@angular/common/http';
 
 
 @NgModule({
@@ -19,7 +18,6 @@ import { NavbarComponent } from './components/shared/navbar/navbar.component';
     SidebarComponent,
     HomeComponent,
     EditUserComponent,
-    NavbarComponent 
   ],
   imports: [
     BrowserModule,
