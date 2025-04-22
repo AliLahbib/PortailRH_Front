@@ -1,0 +1,68 @@
+<div class="container mt-4">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-header">
+          <h3 class="text-center">Nouvelle Demande</h3>
+        </div>
+        <div class="card-body">
+          <form [formGroup]="demandeForm" (ngSubmit)="onSubmit()">
+            <!-- Type de demande -->
+            <div class="form-group">
+              <label for="typeDemande">Type de demande *</label>
+              <select 
+                id="typeDemande" 
+                formControlName="typeDemande" 
+                class="form-control"
+                [ngClass]="{'is-invalid': demandeForm.get('typeDemande').invalid && demandeForm.get('typeDemande').touched}">
+                <option value="">Sélectionnez un type</option>
+                <option *ngFor="let type of typesDemande" [value]="type">
+                  {{type}}
+                </option>
+              </select>
+              <div class="invalid-feedback" *ngIf="demandeForm.get('typeDemande').invalid && demandeForm.get('typeDemande').touched">
+                Le type de demande est requis
+              </div>
+            </div>
+
+            <!-- Commentaire -->
+            <div class="form-group">
+              <label for="commentaire">Commentaire *</label>
+              <textarea 
+                id="commentaire" 
+                formControlName="commentaire" 
+                class="form-control" 
+                rows="4"
+                [ngClass]="{'is-invalid': demandeForm.get('commentaire').invalid && demandeForm.get('commentaire').touched}">
+              </textarea>
+              <div class="invalid-feedback" *ngIf="demandeForm.get('commentaire').invalid && demandeForm.get('commentaire').touched">
+                Le commentaire est requis
+              </div>
+            </div>
+
+            <!-- Justificatif URL -->
+            <div class="form-group">
+              <label for="justificatifURL">URL du justificatif (optionnel)</label>
+              <input 
+                type="text" 
+                id="justificatifURL" 
+                formControlName="justificatifURL" 
+                class="form-control"
+                placeholder="https://...">
+            </div>
+
+            <!-- Boutons -->
+            <div class="form-group text-center mt-4">
+              <button type="button" class="btn btn-secondary mr-2" (click)="goBack()">
+                <i class="fas fa-arrow-left"></i> Retour
+              </button>
+              <button type="submit" class="btn btn-primary" [disabled]="demandeForm.invalid">
+                <i class="fas fa-save"></i> Soumettre
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

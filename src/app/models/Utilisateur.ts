@@ -1,10 +1,13 @@
+import { Departement } from './departement';
+
 export interface Utilisateur {
-    id: number;
+    id?: number;
     nom: string;
-    matricule:string;
+    matricule?: string;
     prenom: string;
     email: string;
-    motDePasse: string;
+    motDePasse?: string;
     role: string;
-  }
+    departement?: Departement;
+}
   

@@ -1,7 +1,10 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Utilisateur } from 'src/app/models/Utilisateur';
-import { UserService } from 'src/app/services/user/user.service'; 
+import { UserService } from 'src/app/services/user/user.service';
+import { DemandeService } from '../../../services/departements/demande.service';
+import { Departement } from '../../../models/departement';
+import Swal from 'sweetalert2';
 declare var $: any;
 
 @Component({
@@ -11,70 +14,173 @@ declare var $: any;
 })
 export class ListUserComponent implements OnInit, AfterViewInit {
 
-  utilisateurs: Utilisateur[] = []; // Tableau pour stocker les utilisateurs
+  utilisateurs: Utilisateur[] = [];
+  departements: Departement[] = [];
+  selectedDepartementId: number | null = null;
+  loading = false;
+  error = '';
 
-  constructor(private userService: UserService, private router: Router) { }
+  constructor(
+    private userService: UserService,
+    private departementService: DemandeService,
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
-    this.loadUsers(); // Charger les utilisateurs lors de l'initialisation du composant
+    this.loadDepartements();
+    this.loadUsers();
   }
 
-  // Charger tous les utilisateurs via le service
-  loadUsers(): void {
-    this.userService.getUsers().subscribe(
-      (data: Utilisateur[]) => {
-        this.utilisateurs = data; // Assigner les données récupérées à la variable utilisateurs
-        // Réinitialiser et mettre à jour DataTables après avoir chargé les utilisateurs
-        this.updateDataTable();
+  loadDepartements(): void {
+    this.departementService.getAllDepartements().subscribe({
+      next: (data) => {
+        this.departements = data;
       },
-      (error) => {
-        console.error('Erreur lors du chargement des utilisateurs', error);
+      error: (err) => {
+        this.error = 'Erreur lors du chargement des départements';
+        console.error(err);
       }
-    );
+    });
   }
 
-  // Rediriger vers la page d'édition d'un utilisateur
-  editUser(id: number): void {
-    this.router.navigate(['/users/edit', id]); // Rediriger vers le composant UserEdit avec l'ID
+  loadUsers(): void {
+    this.loading = true;
+    this.userService.getAllUsers().subscribe({
+      next: (data) => {
+        console.log("debug users ", data);
+        this.utilisateurs = data;
+        this.loading = false;
+        this.initializeDataTable();
+      },
+      error: (err) => {
+        this.error = 'Erreur lors du chargement des utilisateurs';
+        this.loading = false;
+        console.error(err);
+      }
+    });
   }
+
+  onDepartementChange(): void {
+    if (this.selectedDepartementId) {
+      console.log("debug selected filtre ", this.selectedDepartementId);
+      const filteredUsers = this.utilisateurs.filter(user => 
+        user.departement?.id == this.selectedDepartementId
+      );
+      this.updateDataTable(filteredUsers);
+    } else {
+      this.updateDataTable(this.utilisateurs);
+    }
+  }
+
+  editUser(id: number): void {
+    this.router.navigate(['/users/edit', id]);
+  }
+
   addUser(): void {
     this.router.navigate(['/users/edit']);
   }
 
-  // Supprimer un utilisateur
   deleteUser(id: number): void {
-    if (confirm('Êtes-vous sûr de vouloir supprimer cet utilisateur ?')) {
-      this.userService.deleteUser(id).subscribe(
-        () => {
-          this.loadUsers(); // Recharger les utilisateurs après suppression
-        },
-        (error) => {
-          console.error('Erreur lors de la suppression de l\'utilisateur', error);
-        }
-      );
-    }
+    Swal.fire({
+      title: 'Êtes-vous sûr ?',
+      text: "Cette action est irréversible !",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Oui, supprimer !',
+      cancelButtonText: 'Annuler'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.loading = true;
+        this.userService.deleteUser(id).subscribe({
+          next: () => {
+            Swal.fire(
+              'Supprimé !',
+              'L\'utilisateur a été supprimé avec succès.',
+              'success'
+            );
+            this.loadUsers();
+          },
+          error: (err) => {
+            this.error = 'Erreur lors de la suppression de l\'utilisateur';
+            this.loading = false;
+            Swal.fire(
+              'Erreur !',
+              'Une erreur est survenue lors de la suppression.',
+              'error'
+            );
+            console.error(err);
+          }
+        });
+      }
+    });
   }
 
   ngAfterViewInit(): void {
-    // Nous initialiserons DataTables une fois que les utilisateurs seront chargés.
+    this.initializeDataTable();
   }
 
-  // Mettre à jour DataTables après l'ajout, la suppression ou la modification des données
-  updateDataTable(): void {
-    setTimeout(() => {
-      // Si DataTable est déjà initialisé, il faut le réinitialiser
-      if ($.fn.dataTable.isDataTable('#dataTable')) {
-        $('#dataTable').DataTable().clear().destroy(); // Effacer et détruire l'ancienne instance
-      }
+  initializeDataTable(): void {
+    if ($.fn.dataTable.isDataTable('#dataTable')) {
+      $('#dataTable').DataTable().destroy();
+    }
 
-      // Initialisation de DataTable
-      $('#dataTable').DataTable({
-        paging: true,           // Activer la pagination
-        searching: true,        // Activer la recherche
-        ordering: true,         // Activer le tri
-        info: true,             // Afficher le nombre d'éléments
-        lengthChange: true      // Permet de changer le nombre d'éléments par page
-      });
-    }, 0);
+    const table = $('#dataTable').DataTable({
+      data: this.utilisateurs,
+      columns: [
+        { data: 'matricule' },
+        { data: 'nom' },
+        { data: 'prenom' },
+        { data: 'email' },
+        { data: 'role' },
+        { 
+          data: 'departement',
+          render: function(data: any) {
+            return data ? data.label : 'Non assigné';
+          }
+        },
+        {
+          data: 'id',
+          render: (data: any) => {
+            return `
+              <button class="btn btn-sm btn-primary me-2 edit-btn" data-id="${data}">
+                <i class="fas fa-edit"></i>
+              </button>
+              <button class="btn btn-sm btn-danger delete-btn" data-id="${data}">
+                <i class="fas fa-trash"></i>
+              </button>
+            `;
+          }
+        }
+      ],
+      paging: true,
+      searching: true,
+      ordering: true,
+      info: true,
+      lengthChange: true,
+      language: {
+        url: '//cdn.datatables.net/plug-ins/1.10.24/i18n/French.json'
+      }
+    });
+
+    // Gestionnaire d'événements pour les boutons d'édition
+    $('#dataTable').on('click', '.edit-btn', (e: any) => {
+      const id = $(e.currentTarget).data('id');
+      this.editUser(id);
+    });
+
+    // Gestionnaire d'événements pour les boutons de suppression
+    $('#dataTable').on('click', '.delete-btn', (e: any) => {
+      const id = $(e.currentTarget).data('id');
+      this.deleteUser(id);
+    });
+  }
+
+  updateDataTable(data: Utilisateur[]): void {
+    const table = $('#dataTable').DataTable();
+    table.clear();
+    table.rows.add(data);
+    table.draw();
   }
 }

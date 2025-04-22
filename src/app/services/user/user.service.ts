@@ -12,10 +12,8 @@ export class UserService {
 
   constructor(private http: HttpClient) { }
 
-  // Récupérer tous les utilisateurs
-  getUsers(): Observable<Utilisateur[]> {
-    let users : Observable<Utilisateur[]>=this.http.get<Utilisateur[]>(this.apiUrl);
-    return users
+  getAllUsers(): Observable<Utilisateur[]> {
+    return this.http.get<Utilisateur[]>(this.apiUrl);
   }
 
   // Récupérer un utilisateur par ID
@@ -24,14 +22,32 @@ export class UserService {
   }
 
   // Créer un nouvel utilisateur
-  createUser(user: Utilisateur): Observable<Utilisateur> {
-    return this.http.post<Utilisateur>(this.apiUrl, user);
+  createUser(userData: any): Observable<Utilisateur> {
+    // Format the data according to the API requirements
+    const formattedData = {
+      nom: userData.nom,
+      prenom: userData.prenom,
+      email: userData.email,
+      motDePasse: userData.motDePasse,
+      role: userData.role,
+      departement: userData.departementId ? { id: userData.departementId } : null
+    };
+    return this.http.post<Utilisateur>(this.apiUrl, formattedData);
   }
 
   // Mettre à jour un utilisateur
-  updateUser(userId, user: Utilisateur): Observable<Utilisateur> {
-    console.log("debug serveice user id ",userId)
-    return this.http.put<Utilisateur>(`${this.apiUrl}/${userId}`, user);
+  updateUser(id: number, userData: any): Observable<Utilisateur> {
+    console.log("debug updated ",userData)
+    // Format the data according to the API requirements
+    const formattedData = {
+      nom: userData.nom,
+      prenom: userData.prenom,
+      email: userData.email,
+      motDePasse: userData.motDePasse,
+      role: userData.role,
+      departement: userData.departementId ? { id: userData.departementId } : {id:null}
+    };
+    return this.http.put<Utilisateur>(`${this.apiUrl}/${id}`, formattedData);
   }
 
   // Supprimer un utilisateur
