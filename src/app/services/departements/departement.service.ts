@@ -8,7 +8,7 @@ import { Departement } from 'src/app/models/departement';
 @Injectable({
   providedIn: 'root'
 })
-export class DemandeService {
+export class DepartementService {
   private apiUrl = 'http://localhost:8001/api/departements'; // URL de l'API backend
 
   constructor(private http: HttpClient) { }

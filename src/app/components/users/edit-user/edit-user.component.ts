@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Utilisateur } from 'src/app/models/Utilisateur';
 import { UserService } from 'src/app/services/user/user.service';
-import { DemandeService } from '../../../services/departements/demande.service';
+import { DepartementService } from '../../../services/departements/departement.service';
 import { Departement } from 'src/app/models/departement';
 import Swal from 'sweetalert2';
 
@@ -27,7 +27,7 @@ export class EditUserComponent implements OnInit {
     private userService: UserService,
     private route: ActivatedRoute,
     private router: Router,
-    private departementService: DemandeService
+    private departementService: DepartementService
   ) {
     this.utilisateurForm = this.fb.group({
       nom: ['', Validators.required],

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { DemandeService } from '../../../services/departements/demande.service';
+import { DepartementService } from '../../../services/departements/departement.service';
 import { Router } from '@angular/router';
 import { Departement } from 'src/app/models/departement';
 
@@ -13,7 +13,7 @@ export class ListDepartementsComponent implements OnInit {
   error = '';
 
   constructor(
-    private departementService: DemandeService,
+    private departementService: DepartementService,
     private router: Router
   ) { }
 

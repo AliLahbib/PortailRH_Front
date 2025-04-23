@@ -2,7 +2,7 @@ import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Utilisateur } from 'src/app/models/Utilisateur';
 import { UserService } from 'src/app/services/user/user.service';
-import { DemandeService } from '../../../services/departements/demande.service';
+import {  DepartementService } from '../../../services/departements/departement.service';
 import { Departement } from '../../../models/departement';
 import Swal from 'sweetalert2';
 declare var $: any;
@@ -22,7 +22,7 @@ export class ListUserComponent implements OnInit, AfterViewInit {
 
   constructor(
     private userService: UserService,
-    private departementService: DemandeService,
+    private departementService: DepartementService,
     private router: Router
   ) { }
 

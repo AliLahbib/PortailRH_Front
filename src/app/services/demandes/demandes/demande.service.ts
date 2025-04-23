@@ -50,7 +50,9 @@ export class DemandeService {
 
   // Mettre à jour une demande
   updateDemande(id: number, demande: Demande): Observable<Demande> {
-    return this.http.put<Demande>(`${this.apiUrl}/${id}`, demande);
+    let demandeUpdated = { "statut": demande }
+    console.log("debug demande updated",demandeUpdated)
+    return this.http.put<any>(`${this.apiUrl}/statut/${id}`, demandeUpdated);
   }
 
   // Supprimer une demande

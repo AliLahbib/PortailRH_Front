@@ -14,6 +14,7 @@ import { ListDemandesComponent } from './components/demandes/demandes/list-deman
 import { AddDemandesComponent } from './components/demandes/demandes/add-demandes/add-demandes.component';
 import { ListDepartementsComponent } from './components/departements/list-departements/list-departements.component';
 import { EditDepartementComponent } from './components/departements/edit-departement/edit-departement.component';
+import { EditDemandeComponent } from './components/demandes/demandes/edit-demande/edit-demande.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { EditDepartementComponent } from './components/departements/edit-departe
     AddDemandesComponent,
     ListDepartementsComponent,
     EditDepartementComponent,
+    EditDemandeComponent,
   ],
   imports: [
     BrowserModule,

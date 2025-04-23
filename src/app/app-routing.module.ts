@@ -9,6 +9,7 @@ import { ListDemandesComponent } from './components/demandes/demandes/list-deman
 import { AddDemandesComponent } from './components/demandes/demandes/add-demandes/add-demandes.component';
 import { ListDepartementsComponent } from './components/departements/list-departements/list-departements.component';
 import { EditDepartementComponent } from './components/departements/edit-departement/edit-departement.component';
+import { EditDemandeComponent } from './components/demandes/demandes/edit-demande/edit-demande.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -17,6 +18,8 @@ const routes: Routes = [
   { path: 'users/edit/:id', component: EditUserComponent },
   { path: 'demandes', component: ListDemandesComponent },
   { path: 'demandes/add', component: AddDemandesComponent },
+  { path: 'demandes/edit/:id', component: EditDemandeComponent },
+
   {
     path: 'departements',
     children: [

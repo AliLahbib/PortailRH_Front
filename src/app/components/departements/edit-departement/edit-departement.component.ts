@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { DemandeService } from '../../../services/departements/demande.service';
+import { DepartementService } from '../../../services/departements/departement.service';
 import { Departement } from 'src/app/models/departement';
 
 @Component({
@@ -18,7 +18,7 @@ export class EditDepartementComponent implements OnInit {
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
-    private departementService: DemandeService
+    private departementService: DepartementService
   ) {
     this.departementForm = this.fb.group({
       code: ['', [Validators.required, Validators.minLength(2)]],

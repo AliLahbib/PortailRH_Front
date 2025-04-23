@@ -4,8 +4,15 @@ export interface Demande {
     id: number;
     typeDemande: string;
     dateCreation: Date;
-    statut: string;
+    statut: StatutDemande;
     commentaire: string;
     justificatifURL: string;
     utilisateur: Utilisateur;
+  }
+
+
+  export enum StatutDemande {
+    EN_ATTENTE = 'EN_ATTENTE',
+    VALIDE = 'VALIDE',
+    REFUSE = 'REFUSE'
   }
