@@ -1,8 +1,8 @@
-import { Component, OnInit, AfterViewInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Utilisateur } from 'src/app/models/Utilisateur';
 import { UserService } from 'src/app/services/user/user.service';
-import { DepartementService } from '../../../services/departements/departement.service';
+import {  DepartementService } from '../../../services/departements/departement.service';
 import { Departement } from '../../../models/departement';
 import Swal from 'sweetalert2';
 declare var $: any;

@@ -56,6 +56,22 @@
               <th>Département</th>
               <th>Actions</th>
             </tr>
+            <tr *ngFor="let Utilisateur of utilisateurs">
+              <td>{{ Utilisateur.matricule }}</td>
+              <td>{{ Utilisateur.nom }}</td>
+              <td>{{ Utilisateur.prenom }}</td>
+              <td>{{ Utilisateur.email }}</td>
+              <td>{{ Utilisateur.role }}</td>
+              <td>{{ Utilisateur.departement? Utilisateur.departement.label : 'non assigné '  }}</td>
+              <td>
+                <button class="btn btn-info btn-sm mr-2" (click)="editUser(Utilisateur.id)">
+                  <i class="fas fa-edit"></i>
+                </button>
+                <button class="btn btn-danger btn-sm" (click)="deleteUser(Utilisateur.id)">
+                  <i class="fas fa-trash"></i>
+                </button>
+              </td>
+            </tr>
      
           </thead>
         </table>
