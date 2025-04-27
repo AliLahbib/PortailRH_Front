@@ -29,6 +29,7 @@ export class ListDemandesComponent implements OnInit {
     this.demandeService.getDemandes().subscribe(
       (data) => {
         this.demandes = data;
+        console.log("debug demandes ",data)
         this.filterDemandes();
       },
       (error) => {
