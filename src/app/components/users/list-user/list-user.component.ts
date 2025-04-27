@@ -1,8 +1,8 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { Utilisateur } from 'src/app/models/Utilisateur';
 import { UserService } from 'src/app/services/user/user.service';
-import {  DepartementService } from '../../../services/departements/departement.service';
+import { DepartementService } from '../../../services/departements/departement.service';
 import { Departement } from '../../../models/departement';
 import Swal from 'sweetalert2';
 declare var $: any;
@@ -47,8 +47,8 @@ export class ListUserComponent implements OnInit, AfterViewInit {
     this.loading = true;
     this.userService.getAllUsers().subscribe({
       next: (data) => {
-        console.log("debug users ", data);
         this.utilisateurs = data;
+        console.log("debug utilisateurs ",data)
         this.loading = false;
         this.initializeDataTable();
       },
@@ -62,7 +62,6 @@ export class ListUserComponent implements OnInit, AfterViewInit {
 
   onDepartementChange(): void {
     if (this.selectedDepartementId) {
-      console.log("debug selected filtre ", this.selectedDepartementId);
       const filteredUsers = this.utilisateurs.filter(user => 
         user.departement?.id == this.selectedDepartementId
       );
@@ -164,13 +163,12 @@ export class ListUserComponent implements OnInit, AfterViewInit {
       }
     });
 
-    // Gestionnaire d'événements pour les boutons d'édition
+    // Handling click events for edit and delete buttons
     $('#dataTable').on('click', '.edit-btn', (e: any) => {
       const id = $(e.currentTarget).data('id');
       this.editUser(id);
     });
 
-    // Gestionnaire d'événements pour les boutons de suppression
     $('#dataTable').on('click', '.delete-btn', (e: any) => {
       const id = $(e.currentTarget).data('id');
       this.deleteUser(id);
