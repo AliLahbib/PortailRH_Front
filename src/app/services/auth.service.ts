@@ -21,6 +21,7 @@ export class AuthService {
   }
 
   login(matricule: string, password: string) {
+    console.log("debug login ",{ matricule, password })
     return this.http.post<any>(`${environment.apiUrl}/auth/signin`, { matricule, password })
       .pipe(map(user => {
         // stocker les détails de l'utilisateur et le token JWT dans le localStorage

@@ -76,7 +76,7 @@ export class ListUserComponent implements OnInit, AfterViewInit {
   }
 
   addUser(): void {
-    this.router.navigate(['/users/edit']);
+    this.router.navigate(['/users/create']);
   }
 
   deleteUser(id: number): void {

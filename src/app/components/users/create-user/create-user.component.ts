@@ -10,10 +10,10 @@ import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-edit-user',
-  templateUrl: './edit-user.component.html',
-  styleUrls: ['./edit-user.component.css']
+  templateUrl: './create-user.component.html',
+  styleUrls: ['./create-user.component.css']
 })
-export class EditUserComponent implements OnInit {
+export class CreateUserComponent implements OnInit {
 
   userId: number;
   userForm: FormGroup;  // Formulaire réactif
@@ -23,8 +23,7 @@ export class EditUserComponent implements OnInit {
   roles = Object.values(RoleEnum);
 
   constructor(
-    private fb: FormBuilder, // Injection de FormBuilder
-    private route: ActivatedRoute,
+    private fb: FormBuilder, 
     private router: Router,
     private userService: UserService,
     private departementService: DepartementService
@@ -33,43 +32,20 @@ export class EditUserComponent implements OnInit {
       nom: ['', Validators.required],
       prenom: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      matricule: ['', Validators.required],
+      motDePasse: ['', [Validators.required, Validators.minLength(6)]],
       role: ['', Validators.required],
       departement: ['']
     });
   }
 
   ngOnInit(): void {
-    this.userId = +this.route.snapshot.paramMap.get('id')!;
-    if (!this.userId) {
-      this.router.navigate(['/users/create']);
-    } else {
-      this.loadUser();
-      this.loadDepartments();
-    }
+       this.loadDepartments();
+    
     
    
   }
 
-  loadUser(): void {
-    this.userService.getUserById(this.userId).subscribe(
-      (user: Utilisateur) => {
-        this.userForm.patchValue({
-          nom: user.nom,
-          prenom: user.prenom,
-          email: user.email,
-          matricule: user.matricule,
-          role: user.role,
-          departement: user.departement?.id
-        });
-      },
-      error => {
-        console.error('Error loading user:', error);
-        this.error = 'Erreur lors du chargement de l\'utilisateur';
-      }
-    );
-  }
-
+  
   loadDepartments(): void {
     this.departementService.getAllDepartements().subscribe(
       (departments: Departement[]) => {
@@ -84,18 +60,18 @@ export class EditUserComponent implements OnInit {
 
   onSubmit(): void {
     if (this.userForm.valid) {
+      console.log(this.userForm.value);
       this.loading = true;
-      const updatedUser: Utilisateur = {
-        ...this.userForm.value,
-        id: this.userId
+      const createdUser: Utilisateur = {
+        ...this.userForm.value
       };
 
-      this.userService.updateUser(this.userId, updatedUser).subscribe(
+      this.userService.createUser(createdUser).subscribe(
         () => {
           this.loading = false;
           Swal.fire({
             title: 'Succès!',
-            text: 'Utilisateur mis à jour avec succès',
+            text: 'Utilisateur créer avec succès',
             icon: 'success',
             confirmButtonText: 'OK'
           }).then(() => {
@@ -109,10 +85,6 @@ export class EditUserComponent implements OnInit {
         }
       );
     }
-  }
-
-  gotToChangePassword() {
-    this.router.navigate([`/users/${this.userId}/change-password`]);
   }
 
   goBack() {

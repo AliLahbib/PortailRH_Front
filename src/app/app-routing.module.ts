@@ -15,12 +15,13 @@ import { ChangePasswordComponent } from './components/users/change-password/chan
 import { AuthGuard } from './guards/auth.guard';
 import { EditDemandeAutorisationComponent } from './components/demandes/autorisation/edit-demande-autorisation/edit-demande-autorisation.component';
 import { ListDemandeAutorisationComponent } from './components/demandes/autorisation/list-demande-autorisation/list-demande-autorisation.component';
+import { CreateUserComponent } from './components/users/create-user/create-user.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent, canActivate: [AuthGuard] },
   { path: 'login', component: LoginComponent },
   { path: 'users', component: ListUserComponent, canActivate: [AuthGuard] },
-  { path: 'users/edit', component: EditUserComponent, canActivate: [AuthGuard] },
+  { path: 'users/create', component: CreateUserComponent, canActivate: [AuthGuard] },
   { path: 'users/edit/:id', component: EditUserComponent, canActivate: [AuthGuard] },
   { path: 'users/:id/change-password', component: ChangePasswordComponent, canActivate: [AuthGuard] },
   { path: 'demandes', component: ListDemandesComponent, canActivate: [AuthGuard] },

@@ -22,6 +22,7 @@ import { JwtInterceptor } from './interceptors/jwt.interceptor';
 import { ChangePasswordComponent } from './components/users/change-password/change-password.component';
 import { EditDemandeAutorisationComponent } from './components/demandes/autorisation/edit-demande-autorisation/edit-demande-autorisation.component';
 import { ListDemandeAutorisationComponent } from './components/demandes/autorisation/list-demande-autorisation/list-demande-autorisation.component';
+import { CreateUserComponent } from './components/users/create-user/create-user.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { ListDemandeAutorisationComponent } from './components/demandes/autorisa
     LoginComponent,
     ChangePasswordComponent,
     EditDemandeAutorisationComponent,
-    ListDemandeAutorisationComponent
+    ListDemandeAutorisationComponent,
+    CreateUserComponent
   ],
   imports: [
     BrowserModule,

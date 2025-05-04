@@ -1,0 +1,110 @@
+<div class="container mt-4">
+    <div class="card">
+        <div class="card-header">
+            <h2>Créer l'utilisateur</h2>
+        </div>
+        <div class="card-body">
+            <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="email" formControlName="email"
+                                [class]="{'is-invalid': userForm.get('email')?.invalid && userForm.get('email')?.touched}">
+                            <div class="invalid-feedback" *ngIf="userForm.get('email')?.errors?.['required']">
+                                L'email est requis
+                            </div>
+                            <div class="invalid-feedback" *ngIf="userForm.get('email')?.errors?.['email']">
+                                Format d'email invalide
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="motDePasse" class="form-label">Mot de passe</label>
+                            <input type="password" class="form-control" id="motDePasse" formControlName="motDePasse"
+                                [class]="{'is-invalid': userForm.get('motDePasse')?.invalid && userForm.get('motDePasse')?.touched}">
+                            <div class="invalid-feedback" *ngIf="userForm.get('motDePasse')?.errors?.['required']">
+                                Le Mot de passe est requis
+                            </div>
+                            <div class="invalid-feedback" *ngIf="userForm.get('email')?.errors?.['email']">
+                                Format du mot de passe invalide
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="nom" class="form-label">Nom</label>
+                            <input type="text" class="form-control" id="nom" formControlName="nom"
+                                [class]="{'is-invalid': userForm.get('nom')?.invalid && userForm.get('nom')?.touched}">
+                            <div class="invalid-feedback" *ngIf="userForm.get('nom')?.errors?.['required']">
+                                Le nom est requis
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="prenom" class="form-label">Prénom</label>
+                            <input type="text" class="form-control" id="prenom" formControlName="prenom"
+                                [class]="{'is-invalid': userForm.get('prenom')?.invalid && userForm.get('prenom')?.touched}">
+                            <div class="invalid-feedback" *ngIf="userForm.get('prenom')?.errors?.['required']">
+                                Le prénom est requis
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="role" class="form-label">Rôle</label>
+                            <select class="form-select" id="role" formControlName="role"
+                                [class]="{'is-invalid': userForm.get('role')?.invalid && userForm.get('role')?.touched}">
+                                <option value="">Sélectionnez un rôle</option>
+                                <option *ngFor="let role of roles" [value]="role">
+                                    {{role}}
+                                </option>
+                            </select>
+                            <div class="invalid-feedback" *ngIf="userForm.get('role')?.errors?.['required']">
+                                Le rôle est requis
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="departement" class="form-label">Département</label>
+                            <select class="form-select" id="departement" formControlName="departement">
+                                <option [value]="null">Aucun département</option>
+                                <option *ngFor="let dept of departments" [value]="dept.id">
+                                    {{dept.nom}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div *ngIf="error" class="alert alert-danger">
+                    {{error}}
+                </div>
+
+                <div class="d-flex justify-content-between mt-4">
+                    <div>
+                        <button type="button" class="btn btn-secondary" routerLink="/users">
+                            Retour
+                        </button>
+                    </div>
+                    <button type="submit" class="btn btn-primary" [disabled]="userForm.invalid || loading">
+                        <span *ngIf="loading" class="spinner-border spinner-border-sm me-1"></span>
+                        Enregistrer
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
