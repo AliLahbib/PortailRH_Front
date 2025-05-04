@@ -8,37 +8,30 @@
         <div class="card-body">
           <form [formGroup]="departementForm" (ngSubmit)="onSubmit()">
             <div class="mb-3">
-              <label for="code" class="form-label">Code</label>
+              <label for="nom" class="form-label">Nom</label>
               <input
                 type="text"
                 class="form-control"
-                id="code"
-                formControlName="code"
-                [ngClass]="{'is-invalid': departementForm.get('code')?.invalid && departementForm.get('code')?.touched}"
+                id="nom"
+                formControlName="nom"
+                [ngClass]="{'is-invalid': departementForm.get('nom')?.invalid && departementForm.get('nom')?.touched}"
               >
-              <div class="invalid-feedback" *ngIf="departementForm.get('code')?.errors?.['required']">
-                Le code est requis
+              <div class="invalid-feedback" *ngIf="departementForm.get('nom')?.errors?.['required']">
+                Le nom est requis
               </div>
-              <div class="invalid-feedback" *ngIf="departementForm.get('code')?.errors?.['minlength']">
-                Le code doit contenir au moins 2 caractères
+              <div class="invalid-feedback" *ngIf="departementForm.get('nom')?.errors?.['minlength']">
+                Le nom doit contenir au moins 2 caractères
               </div>
             </div>
 
             <div class="mb-3">
-              <label for="label" class="form-label">Label</label>
-              <input
-                type="text"
+              <label for="description" class="form-label">Description</label>
+              <textarea
                 class="form-control"
-                id="label"
-                formControlName="label"
-                [ngClass]="{'is-invalid': departementForm.get('label')?.invalid && departementForm.get('label')?.touched}"
-              >
-              <div class="invalid-feedback" *ngIf="departementForm.get('label')?.errors?.['required']">
-                Le label est requis
-              </div>
-              <div class="invalid-feedback" *ngIf="departementForm.get('label')?.errors?.['minlength']">
-                Le label doit contenir au moins 3 caractères
-              </div>
+                id="description"
+                formControlName="description"
+                rows="3"
+              ></textarea>
             </div>
 
             <div *ngIf="error" class="alert alert-danger">

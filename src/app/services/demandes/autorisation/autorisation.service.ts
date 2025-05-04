@@ -1,0 +1,36 @@
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { environment } from '../../../../environments/environment';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class AutorisationService {
+  private apiUrl = `${environment.apiUrl}/demandes-autorisation`;
+
+  constructor(private http: HttpClient) { }
+
+  getDemandeAutorisation(id: number): Observable<any> {
+    return this.http.get(`${this.apiUrl}/${id}`);
+  }
+
+  updateDemandeAutorisation(id: number, data: any): Observable<any> {
+    return this.http.put(`${this.apiUrl}/${id}`, data);
+  }
+
+  createDemandeAutorisation(data: any): Observable<any> {
+    data= {...data,"utilisateurId":1}
+    console.log("debug for create ",data)
+     let response =this.http.post(this.apiUrl, data);
+     return response
+  }
+
+  deleteDemandeAutorisation(id: number): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/${id}`);
+  }
+
+  getDemandesByUtilisateur(utilisateurId: number): Observable<any> {
+    return this.http.get(`${this.apiUrl}/utilisateur/${utilisateurId}`);
+  }
+}

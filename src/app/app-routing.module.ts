@@ -10,18 +10,30 @@ import { AddDemandesComponent } from './components/demandes/demandes/add-demande
 import { ListDepartementsComponent } from './components/departements/list-departements/list-departements.component';
 import { EditDepartementComponent } from './components/departements/edit-departement/edit-departement.component';
 import { EditDemandeComponent } from './components/demandes/demandes/edit-demande/edit-demande.component';
+import { LoginComponent } from './components/auth/login/login.component';
+import { ChangePasswordComponent } from './components/users/change-password/change-password.component';
+import { AuthGuard } from './guards/auth.guard';
+import { EditDemandeAutorisationComponent } from './components/demandes/autorisation/edit-demande-autorisation/edit-demande-autorisation.component';
+import { ListDemandeAutorisationComponent } from './components/demandes/autorisation/list-demande-autorisation/list-demande-autorisation.component';
 
 const routes: Routes = [
-  { path: '', component: HomeComponent },
-  { path: 'users', component: ListUserComponent },
-  { path: 'users/edit', component: EditUserComponent },
-  { path: 'users/edit/:id', component: EditUserComponent },
-  { path: 'demandes', component: ListDemandesComponent },
-  { path: 'demandes/add', component: AddDemandesComponent },
-  { path: 'demandes/edit/:id', component: EditDemandeComponent },
+  { path: '', component: HomeComponent, canActivate: [AuthGuard] },
+  { path: 'login', component: LoginComponent },
+  { path: 'users', component: ListUserComponent, canActivate: [AuthGuard] },
+  { path: 'users/edit', component: EditUserComponent, canActivate: [AuthGuard] },
+  { path: 'users/edit/:id', component: EditUserComponent, canActivate: [AuthGuard] },
+  { path: 'users/:id/change-password', component: ChangePasswordComponent, canActivate: [AuthGuard] },
+  { path: 'demandes', component: ListDemandesComponent, canActivate: [AuthGuard] },
+  { path: 'demandes/add', component: AddDemandesComponent, canActivate: [AuthGuard] },
+  { path: 'demandes/edit/:id', component: EditDemandeComponent, canActivate: [AuthGuard] },
+  { path: 'demandes/autorisation', component: ListDemandeAutorisationComponent },
+  { path: 'demandes/autorisation/edit/:id', component: EditDemandeAutorisationComponent },
+  { path: 'demandes/autorisation/create', component: EditDemandeAutorisationComponent }
+  ,
 
   {
     path: 'departements',
+    canActivate: [AuthGuard],
     children: [
       { path: '', component: ListDepartementsComponent },
       { path: 'edit/new', component: EditDepartementComponent },

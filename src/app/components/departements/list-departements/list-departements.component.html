@@ -16,19 +16,23 @@
     {{ error }}
   </div>
 
+  <div *ngIf="successMessage" class="alert alert-success">
+    {{ successMessage }}
+  </div>
+
   <div class="table-responsive">
     <table class="table table-striped">
       <thead>
         <tr>
-          <th>Code</th>
-          <th>Label</th>
+          <th>Nom</th>
+          <th>Description</th>
           <th>Actions</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let departement of departements">
-          <td>{{ departement.code }}</td>
-          <td>{{ departement.label }}</td>
+          <td>{{ departement.nom }}</td>
+          <td>{{ departement.description || '-' }}</td>
           <td>
             <button class="btn btn-sm btn-primary me-2" (click)="editDepartement(departement.id!)">
               <i class="fas fa-edit"></i>

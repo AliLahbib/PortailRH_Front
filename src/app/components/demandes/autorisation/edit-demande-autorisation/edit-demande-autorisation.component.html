@@ -1,0 +1,66 @@
+<div class="container mt-4">
+  <h2>{{ isEditMode ? 'Modifier' : 'Créer' }} une demande d'autorisation</h2>
+  
+  <form [formGroup]="demandeForm" (ngSubmit)="onSubmit()" class="mt-4">
+    <div class="row">
+      <div class="col-md-6 mb-3">
+        <label for="dateAutorisation" class="form-label">Date d'autorisation</label>
+        <input type="date" class="form-control" id="dateAutorisation" formControlName="dateAutorisation">
+        <div class="invalid-feedback" *ngIf="demandeForm.get('dateAutorisation')?.invalid && demandeForm.get('dateAutorisation')?.touched">
+          La date est requise
+        </div>
+      </div>
+
+      <div class="col-md-3 mb-3">
+        <label for="heureDebut" class="form-label">Heure de début</label>
+        <input type="time" class="form-control" id="heureDebut" formControlName="heureDebut">
+        <div class="invalid-feedback" *ngIf="demandeForm.get('heureDebut')?.invalid && demandeForm.get('heureDebut')?.touched">
+          L'heure de début est requise
+        </div>
+      </div>
+
+      <div class="col-md-3 mb-3">
+        <label for="heureFin" class="form-label">Heure de fin</label>
+        <input type="time" class="form-control" id="heureFin" formControlName="heureFin">
+        <div class="invalid-feedback" *ngIf="demandeForm.get('heureFin')?.invalid && demandeForm.get('heureFin')?.touched">
+          L'heure de fin est requise
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12 mb-3">
+        <label for="raison" class="form-label">Raison</label>
+        <input type="text" class="form-control" id="raison" formControlName="raison">
+        <div class="invalid-feedback" *ngIf="demandeForm.get('raison')?.invalid && demandeForm.get('raison')?.touched">
+          La raison est requise
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12 mb-3">
+        <label for="commentaire" class="form-label">Commentaire</label>
+        <textarea class="form-control" id="commentaire" formControlName="commentaire" rows="3"></textarea>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12 mb-3">
+        <label for="justificatifURL" class="form-label">URL du justificatif</label>
+        <input type="text" class="form-control" id="justificatifURL" formControlName="justificatifURL">
+      </div>
+    </div>
+
+    <div class="row mt-4">
+      <div class="col-12">
+        <button type="submit" class="btn btn-primary" [disabled]="!demandeForm.valid">
+          {{ isEditMode ? 'Mettre à jour' : 'Créer' }}
+        </button>
+        <button type="button" class="btn btn-secondary ms-2" >
+          Annuler
+        </button>
+      </div>
+    </div>
+  </form>
+</div>

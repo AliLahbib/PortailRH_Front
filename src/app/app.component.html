@@ -1,5 +1,11 @@
-<app-sidebar></app-sidebar> <!-- Sidebar component -->
+<ng-container *ngIf="!isLoginPage()">
+  <app-sidebar></app-sidebar> <!-- Sidebar component -->
 
-<div id="content-wrapper" class="d-flex flex-column">
+  <div id="content-wrapper" class="d-flex flex-column">
+    <router-outlet></router-outlet>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="isLoginPage()">
   <router-outlet></router-outlet>
-</div>
+</ng-container>

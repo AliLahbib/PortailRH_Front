@@ -11,6 +11,7 @@ export class ListDepartementsComponent implements OnInit {
   departements: Departement[] = [];
   loading = false;
   error = '';
+  successMessage = '';
 
   constructor(
     private departementService: DepartementService,
@@ -23,6 +24,7 @@ export class ListDepartementsComponent implements OnInit {
 
   loadDepartements(): void {
     this.loading = true;
+    this.error = '';
     this.departementService.getAllDepartements().subscribe({
       next: (data) => {
         this.departements = data;
@@ -30,7 +32,7 @@ export class ListDepartementsComponent implements OnInit {
         this.loading = false;
       },
       error: (err) => {
-        this.error = 'Erreur lors du chargement des départements';
+        this.error = err.error?.message || 'Erreur lors du chargement des départements';
         this.loading = false;
         console.error(err);
       }
@@ -43,12 +45,17 @@ export class ListDepartementsComponent implements OnInit {
 
   deleteDepartement(id: number): void {
     if (confirm('Êtes-vous sûr de vouloir supprimer ce département ?')) {
+      this.loading = true;
+      this.error = '';
       this.departementService.deleteDepartement(id).subscribe({
         next: () => {
+          this.successMessage = 'Département supprimé avec succès';
           this.loadDepartements();
+          setTimeout(() => this.successMessage = '', 3000);
         },
         error: (err) => {
-          this.error = 'Erreur lors de la suppression du département';
+          this.error = err.error?.message || 'Erreur lors de la suppression du département';
+          this.loading = false;
           console.error(err);
         }
       });

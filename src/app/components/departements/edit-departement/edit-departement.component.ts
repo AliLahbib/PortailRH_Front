@@ -21,8 +21,8 @@ export class EditDepartementComponent implements OnInit {
     private departementService: DepartementService
   ) {
     this.departementForm = this.fb.group({
-      code: ['', [Validators.required, Validators.minLength(2)]],
-      label: ['', [Validators.required, Validators.minLength(3)]]
+      nom: ['', [Validators.required, Validators.minLength(2)]],
+      description: ['']
     });
   }
 
@@ -42,7 +42,7 @@ export class EditDepartementComponent implements OnInit {
         this.loading = false;
       },
       error: (err) => {
-        this.error = 'Erreur lors du chargement du département';
+        this.error = err.error?.message || 'Erreur lors du chargement du département';
         this.loading = false;
         console.error(err);
       }
@@ -60,7 +60,7 @@ export class EditDepartementComponent implements OnInit {
             this.router.navigate(['/departements']);
           },
           error: (err) => {
-            this.error = 'Erreur lors de la création du département';
+            this.error = err.error?.message || 'Erreur lors de la création du département';
             this.loading = false;
             console.error(err);
           }
@@ -72,7 +72,7 @@ export class EditDepartementComponent implements OnInit {
             this.router.navigate(['/departements']);
           },
           error: (err) => {
-            this.error = 'Erreur lors de la mise à jour du département';
+            this.error = err.error?.message || 'Erreur lors de la mise à jour du département';
             this.loading = false;
             console.error(err);
           }

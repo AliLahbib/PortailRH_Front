@@ -1,40 +1,28 @@
 <div class="container mt-4">
-  <div class="row justify-content-center">
-    <div class="col-md-8">
-      <div class="card">
-        <div class="card-header">
-          <h2>{{ isNew ? 'Nouvel Utilisateur' : 'Modifier Utilisateur' }}</h2>
-        </div>
-        <div class="card-body">
-          <form [formGroup]="utilisateurForm" (ngSubmit)="saveUser()">
+  <div class="card">
+    <div class="card-header">
+      <h2>Modifier l'utilisateur</h2>
+    </div>
+    <div class="card-body">
+      <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+        <div class="row">
+          <div class="col-md-6">
             <div class="mb-3">
-              <label for="nom" class="form-label">Nom</label>
+              <label for="matricule" class="form-label">Matricule</label>
               <input
                 type="text"
                 class="form-control"
-                id="nom"
-                formControlName="nom"
-                [ngClass]="{'is-invalid': utilisateurForm.get('nom')?.invalid && utilisateurForm.get('nom')?.touched}"
+                id="matricule"
+                formControlName="matricule"
+                [ngClass]="{'is-invalid': userForm.get('matricule')?.invalid && userForm.get('matricule')?.touched}"
               >
-              <div class="invalid-feedback" *ngIf="utilisateurForm.get('nom')?.errors?.['required']">
-                Le nom est requis
+              <div class="invalid-feedback" *ngIf="userForm.get('matricule')?.errors?.['required']">
+                Le matricule est requis
               </div>
             </div>
+          </div>
 
-            <div class="mb-3">
-              <label for="prenom" class="form-label">Prénom</label>
-              <input
-                type="text"
-                class="form-control"
-                id="prenom"
-                formControlName="prenom"
-                [ngClass]="{'is-invalid': utilisateurForm.get('prenom')?.invalid && utilisateurForm.get('prenom')?.touched}"
-              >
-              <div class="invalid-feedback" *ngIf="utilisateurForm.get('prenom')?.errors?.['required']">
-                Le prénom est requis
-              </div>
-            </div>
-
+          <div class="col-md-6">
             <div class="mb-3">
               <label for="email" class="form-label">Email</label>
               <input
@@ -42,82 +30,109 @@
                 class="form-control"
                 id="email"
                 formControlName="email"
-                [ngClass]="{'is-invalid': utilisateurForm.get('email')?.invalid && utilisateurForm.get('email')?.touched}"
+                [ngClass]="{'is-invalid': userForm.get('email')?.invalid && userForm.get('email')?.touched}"
               >
-              <div class="invalid-feedback" *ngIf="utilisateurForm.get('email')?.errors?.['required']">
+              <div class="invalid-feedback" *ngIf="userForm.get('email')?.errors?.['required']">
                 L'email est requis
               </div>
-              <div class="invalid-feedback" *ngIf="utilisateurForm.get('email')?.errors?.['email']">
+              <div class="invalid-feedback" *ngIf="userForm.get('email')?.errors?.['email']">
                 Format d'email invalide
               </div>
             </div>
+          </div>
+        </div>
 
+        <div class="row">
+          <div class="col-md-6">
             <div class="mb-3">
-              <label for="motDePasse" class="form-label">Mot de passe</label>
+              <label for="nom" class="form-label">Nom</label>
               <input
-                type="password"
+                type="text"
                 class="form-control"
-                id="motDePasse"
-                formControlName="motDePasse"
-                [ngClass]="{'is-invalid': utilisateurForm.get('motDePasse')?.invalid && utilisateurForm.get('motDePasse')?.touched}"
+                id="nom"
+                formControlName="nom"
+                [ngClass]="{'is-invalid': userForm.get('nom')?.invalid && userForm.get('nom')?.touched}"
               >
-              <div class="invalid-feedback" *ngIf="utilisateurForm.get('motDePasse')?.errors?.['required']">
-                Le mot de passe est requis
-              </div>
-              <div class="invalid-feedback" *ngIf="utilisateurForm.get('motDePasse')?.errors?.['minlength']">
-                Le mot de passe doit contenir au moins 6 caractères
+              <div class="invalid-feedback" *ngIf="userForm.get('nom')?.errors?.['required']">
+                Le nom est requis
               </div>
             </div>
+          </div>
 
+          <div class="col-md-6">
+            <div class="mb-3">
+              <label for="prenom" class="form-label">Prénom</label>
+              <input
+                type="text"
+                class="form-control"
+                id="prenom"
+                formControlName="prenom"
+                [ngClass]="{'is-invalid': userForm.get('prenom')?.invalid && userForm.get('prenom')?.touched}"
+              >
+              <div class="invalid-feedback" *ngIf="userForm.get('prenom')?.errors?.['required']">
+                Le prénom est requis
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6">
             <div class="mb-3">
               <label for="role" class="form-label">Rôle</label>
               <select
                 class="form-select"
                 id="role"
                 formControlName="role"
-                [ngClass]="{'is-invalid': utilisateurForm.get('role')?.invalid && utilisateurForm.get('role')?.touched}"
+                [ngClass]="{'is-invalid': userForm.get('role')?.invalid && userForm.get('role')?.touched}"
               >
-                <option value="EMPLOYE">Employé</option>
-                <option value="ADMIN">Administrateur</option>
+                <option value="">Sélectionnez un rôle</option>
+                <option *ngFor="let role of roles" [value]="role">
+                  {{role}}
+                </option>
               </select>
-              <div class="invalid-feedback" *ngIf="utilisateurForm.get('role')?.errors?.['required']">
+              <div class="invalid-feedback" *ngIf="userForm.get('role')?.errors?.['required']">
                 Le rôle est requis
               </div>
             </div>
+          </div>
 
+          <div class="col-md-6">
             <div class="mb-3">
-              <label for="departementId" class="form-label">Département</label>
+              <label for="departement" class="form-label">Département</label>
               <select
                 class="form-select"
-                id="departementId"
-                formControlName="departementId"
+                id="departement"
+                formControlName="departement"
               >
                 <option [ngValue]="null">Aucun département</option>
-                <option *ngFor="let dept of departements" [value]="dept.id">
-                  {{ dept.label }} ({{ dept.code }})
+                <option *ngFor="let dept of departments" [value]="dept.id">
+                  {{dept.nom}}
                 </option>
               </select>
-              <small class="form-text text-muted">
-                Sélectionnez "Aucun département" pour retirer l'utilisateur de son département actuel
-              </small>
             </div>
-
-            <div *ngIf="error" class="alert alert-danger">
-              {{ error }}
-            </div>
-
-            <div class="d-flex justify-content-between">
-              <button type="button" class="btn btn-secondary" routerLink="/users">
-                Annuler
-              </button>
-              <button type="submit" class="btn btn-primary" [disabled]="utilisateurForm.invalid || loading">
-                <span *ngIf="loading" class="spinner-border spinner-border-sm me-1"></span>
-                {{ isNew ? 'Créer' : 'Mettre à jour' }}
-              </button>
-            </div>
-          </form>
+          </div>
         </div>
-      </div>
+
+        <div *ngIf="error" class="alert alert-danger">
+          {{error}}
+        </div>
+
+        <div class="d-flex justify-content-between mt-4">
+          <div>
+            <button type="button" class="btn btn-secondary" routerLink="/users">
+              Retour
+            </button>
+            <button type="button" class="btn btn-warning ms-2" [routerLink]="['/users', userId, 'change-password']">
+              Changer le mot de passe
+            </button>
+          </div>
+          <button type="submit" class="btn btn-primary" [disabled]="userForm.invalid || loading">
+            <span *ngIf="loading" class="spinner-border spinner-border-sm me-1"></span>
+            Enregistrer
+          </button>
+        </div>
+      </form>
     </div>
   </div>
 </div>

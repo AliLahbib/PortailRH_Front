@@ -1,0 +1,29 @@
+<div class="login-container">
+  <div class="login-card">
+    <div class="login-header">
+      <h1>Connexion</h1>
+    </div>
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="matricule">Matricule</label>
+        <input type="text" class="form-control" id="matricule" formControlName="matricule" placeholder="Entrez votre matricule">
+        <div *ngIf="loginForm.get('matricule')?.invalid && loginForm.get('matricule')?.touched" class="text-danger">
+          Le matricule est requis
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="password">Mot de passe</label>
+        <input type="password" class="form-control" id="password" formControlName="password" placeholder="Entrez votre mot de passe">
+        <div *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched" class="text-danger">
+          Le mot de passe est requis
+        </div>
+      </div>
+      <button type="submit" class="btn btn-primary btn-login" [disabled]="loginForm.invalid">
+        Se connecter
+      </button>
+    </form>
+    <div *ngIf="errorMessage" class="alert alert-danger mt-3">
+      {{ errorMessage }}
+    </div>
+  </div>
+</div> 
