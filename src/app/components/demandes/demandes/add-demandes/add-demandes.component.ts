@@ -13,9 +13,7 @@ export class AddDemandesComponent implements OnInit {
   demandeForm: FormGroup;
   typesDemande = [
     'CONGE',
-    'PRET',
-    'DOCUMENT',
-    'AUTRE'
+
   ];
 
   constructor(

@@ -14,6 +14,9 @@ export class AutorisationService {
   getDemandeAutorisation(id: number): Observable<any> {
     return this.http.get(`${this.apiUrl}/${id}`);
   }
+  getAllDemandes(): Observable<any[]> {
+    return this.http.get<any[]>(this.apiUrl);
+  }
 
   updateDemandeAutorisation(id: number, data: any): Observable<any> {
     return this.http.put(`${this.apiUrl}/${id}`, data);

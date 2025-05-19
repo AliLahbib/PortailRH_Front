@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AutorisationService } from '../../../../services/demandes/autorisation/autorisation.service';
 import { ToastrService } from 'ngx-toastr';
-
+import { AuthService } from 'src/app/services/auth.service';
 @Component({
   selector: 'app-list-demande-autorisation',
   templateUrl: './list-demande-autorisation.component.html',
@@ -15,7 +15,8 @@ export class ListDemandeAutorisationComponent implements OnInit {
   constructor(
     private autorisationService: AutorisationService,
     private router: Router,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private authService: AuthService
   ) { }
 
   ngOnInit(): void {
@@ -23,6 +24,29 @@ export class ListDemandeAutorisationComponent implements OnInit {
   }
 
   loadDemandes(): void {
+    if (this.authService.getCurentUser().role in ["ADMIN","CHEF"]) {
+      this.autorisationService.getAllDemandes().subscribe(
+        data => {
+          this.demandes = data;
+          this.loading = false;
+        },
+        error => {
+          this.toastr.error('Erreur lors du chargement des demandes');
+          this.loading = false;
+        }
+      );
+    }else {
+      this.autorisationService.getDemandesByUtilisateur(this.authService.getCurentUser().id).subscribe(
+        data => {
+          this.demandes = data;
+          this.loading = false;
+        },
+        error => {  
+          this.toastr.error('Erreur lors du chargement des demandes');
+          this.loading = false;
+        }
+      );
+    }
     this.autorisationService.getDemandesByUtilisateur(1).subscribe(
       data => {
         this.demandes = data;

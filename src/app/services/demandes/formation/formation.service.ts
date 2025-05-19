@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { DemandeFormation } from 'src/app/models/demande-formation';
 import { environment } from 'src/environments/environment';
+import { AuthService } from '../../auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,7 @@ import { environment } from 'src/environments/environment';
 export class FormationService {
   private apiUrl = environment.apiUrl + '/demandes-formation';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,private authService:AuthService) { }
 
   getAllDemandesFormation(): Observable<DemandeFormation[]> {
     return this.http.get<DemandeFormation[]>(this.apiUrl);
@@ -22,13 +23,13 @@ export class FormationService {
 
   createDemandeFormation(demande: DemandeFormation): Observable<DemandeFormation> {
    console.log("creation demande ",demande);
-   let data={ ...demande,"utilisateurId":1}
+   let data={ ...demande,"utilisateurId":this.authService.getCurentUser().id}
     return this.http.post<DemandeFormation>(this.apiUrl, data);
   }
 
   updateDemandeFormation(id: number, demande: Partial<DemandeFormation>): Observable<DemandeFormation> {
    console.log("update demande ",demande);
-    let data={ ...demande,"utilisateurId":1}
+    let data={ ...demande,"utilisateurId":this.authService.getCurentUser().id}
     return this.http.put<DemandeFormation>(`${this.apiUrl}/${id}`, data);
   }
 

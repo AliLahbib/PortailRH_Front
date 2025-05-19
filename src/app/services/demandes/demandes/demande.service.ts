@@ -46,7 +46,7 @@ export class DemandeService {
     // demande={ ...demande,"utilisateurId":1}
     let user= this.authService.getCurentUser();
 
-    demande = { ...demande, "utilisateurId": user.id };
+    demande = { ...demande, "utilisateurId": this.authService.getCurentUser().id };
     console.log("debug demande ",demande)
     return this.http.post<Demande>(this.apiUrl+"/create", demande);
   }

@@ -26,7 +26,7 @@ export class ListDemandeCongeComponent implements OnInit {
   }
 
   loadDemandes(): void {
-    if (this.authService.getCurentUser().role == "ADMIN") {
+    if (this.authService.getCurentUser().role in ["ADMIN","CHEF"]) {
       this.congeService.getAllDemandesConge().subscribe(
         data => {
           this.demandes = data;
