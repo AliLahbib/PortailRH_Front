@@ -25,6 +25,8 @@ import { ListDemandeAutorisationComponent } from './components/demandes/autorisa
 import { CreateUserComponent } from './components/users/create-user/create-user.component';
 import { EditDemandeCongeComponent } from './components/demandes/conge/edit-demande-conge/edit-demande-conge.component';
 import { ListDemandeCongeComponent } from './components/demandes/conge/list-demande-conge/list-demande-conge.component';
+import { ListDemandeFormationComponent } from './components/demandes/formation/list-demande-formation/list-demande-formation.component';
+import { EditDemandeFormationComponent } from './components/demandes/formation/edit-demande-formation/edit-demande-formation.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +46,9 @@ import { ListDemandeCongeComponent } from './components/demandes/conge/list-dema
     ListDemandeAutorisationComponent,
     CreateUserComponent,
     EditDemandeCongeComponent,
-    ListDemandeCongeComponent
+    ListDemandeCongeComponent,
+    ListDemandeFormationComponent,
+    EditDemandeFormationComponent
   ],
   imports: [
     BrowserModule,

@@ -2,21 +2,26 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../../../environments/environment';
-
+import { AuthService } from '../../../services/auth.service';
+import { DemandeConge } from 'src/app/models/demande-conge';
 @Injectable({
   providedIn: 'root'
 })
 export class CongeService {
   private apiUrl = `${environment.apiUrl}/demandes-conge`;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,private authService:AuthService) { }
+
+  getAllDemandesConge(): Observable<any[]> {
+    return this.http.get<DemandeConge[]>(this.apiUrl);
+  }
 
   getDemandeConge(id: number): Observable<any> {
     return this.http.get(`${this.apiUrl}/${id}`);
   }
 
   updateDemandeConge(id: number, data: any): Observable<any> {
-         data = { ...data, "utilisateurId": 1 };
+        //  data = { ...data};
         // data = { ...data, "id": id };
         console.log("Data to be update:", data);
 
@@ -25,7 +30,7 @@ export class CongeService {
 
   createDemandeConge(data: any): Observable<any> {
     console.log("Data to be sent:", data);
-    data = { ...data, "utilisateurId": 1 };
+    data = { ...data, "utilisateurId": this.authService.getCurentUser().id };
     return this.http.post(this.apiUrl, data);
   }
 

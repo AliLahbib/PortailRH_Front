@@ -8,6 +8,7 @@ export interface Demande {
     commentaire: string;
     justificatifURL: string;
     utilisateur: Utilisateur;
+    utilisateurId?: number;
   }
 
 

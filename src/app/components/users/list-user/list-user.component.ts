@@ -104,12 +104,20 @@ export class ListUserComponent implements OnInit, AfterViewInit {
           error: (err) => {
             this.error = 'Erreur lors de la suppression de l\'utilisateur';
             this.loading = false;
-            Swal.fire(
-              'Erreur !',
-              'Une erreur est survenue lors de la suppression.',
-              'error'
-            );
-            console.error(err);
+            if (err.status == 409) {
+              console.error('Erreur d\'intégrité :', err);
+              Swal.fire(
+                'Suppression impossible',
+                'Cet utilisateur est référencé par des demandes',
+                'error'
+              );
+            } else {
+              Swal.fire(
+                'Erreur !',
+                'Une erreur est survenue lors de la suppression.',
+                'error'
+              );
+            }
           }
         });
       }

@@ -86,7 +86,16 @@ export class UserService {
   // Supprimer un utilisateur
   deleteUser(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`)
-      .pipe(catchError(this.handleError));
+      // .pipe(
+      //   catchError((error: HttpErrorResponse) => {
+      //     let errorMessage = 'Erreur lors de la suppression de l\'utilisateur';
+      //     if (error.status == 409) {
+      //       // Erreur d'intégrité (conflit)
+      //       errorMessage = error.error || 'Impossible de supprimer l\'utilisateur car il est référencé de demandes.';
+      //     }
+      //     return throwError(() => new Error(errorMessage));
+      //   })
+      // );
   }
 
   changePassword(userId: number, newPassword: string): Observable<any> {

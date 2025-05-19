@@ -2,14 +2,14 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Demande } from '../../../models/demande';
-
+import { AuthService } from '../../auth.service';
 @Injectable({
   providedIn: 'root'
 })
 export class DemandeService {
   private apiUrl = 'http://localhost:8001/api/demandes'; // URL de l'API backend
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,private authService:AuthService) { }
 
   // Récupérer toutes les demandes
   getDemandes(): Observable<Demande[]> {
@@ -43,7 +43,10 @@ export class DemandeService {
 
   // Créer une nouvelle demande
   createDemande(demande: any): Observable<Demande> {
-    demande={ ...demande,"utilisateurId":1}
+    // demande={ ...demande,"utilisateurId":1}
+    let user= this.authService.getCurentUser();
+
+    demande = { ...demande, "utilisateurId": user.id };
     console.log("debug demande ",demande)
     return this.http.post<Demande>(this.apiUrl+"/create", demande);
   }

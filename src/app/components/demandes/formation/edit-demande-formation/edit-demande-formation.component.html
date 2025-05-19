@@ -1,0 +1,51 @@
+<div class="container mt-4">
+    <h2 *ngIf="isEditMode">Modifier une demande de formation</h2>
+    <h2 *ngIf="!isEditMode">Créer une demande de formation</h2>
+
+    <form [formGroup]="demandeForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+            <label for="nomFormation">Intitulé de la formation</label>
+            <input id="nomFormation" class="form-control" formControlName="nomFormation" required />
+            <div *ngIf="demandeForm.get('nomFormation')?.invalid && demandeForm.get('nomFormation')?.touched"
+                class="text-danger">
+                Ce champ est obligatoire.
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="organisme">Organisme</label>
+            <input id="organisme" class="form-control" formControlName="organisme" required />
+            <div *ngIf="demandeForm.get('organisme')?.invalid && demandeForm.get('organisme')?.touched"
+                class="text-danger">
+                Ce champ est obligatoire.
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="duree">Durée</label>
+            <input id="duree" class="form-control" formControlName="duree" required />
+            <div *ngIf="demandeForm.get('duree')?.invalid && demandeForm.get('duree')?.touched" class="text-danger">
+                Ce champ est obligatoire.
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="objectif">Objectif</label>
+            <input id="objectif" class="form-control" formControlName="objectif" required />
+            <div *ngIf="demandeForm.get('objectif')?.invalid && demandeForm.get('objectif')?.touched"
+                class="text-danger">
+                Ce champ est obligatoire.
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="commentaire">Commentaire</label>
+            <textarea id="commentaire" class="form-control" formControlName="commentaire"></textarea>
+        </div>
+        <div class="form-group">
+            <label for="justificatifURL">Justificatif (URL)</label>
+            <input id="justificatifURL" class="form-control" formControlName="justificatifURL" />
+        </div>
+        <div *ngIf="errorMsg" class="alert alert-danger">{{ errorMsg }}</div>
+        <button class="btn btn-primary" type="submit" [disabled]="demandeForm.invalid || loading">
+            {{ isEditMode ? 'Modifier' : 'Créer' }}
+        </button>
+        <span *ngIf="loading" class="ml-2">Chargement...</span>
+    </form>
+</div>

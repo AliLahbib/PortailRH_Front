@@ -1,6 +1,17 @@
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
     <!-- User Info -->
-    <li class="nav-item user-info" *ngIf="currentUserInformation">
+   
+    <!-- Sidebar - Brand -->
+    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="#">
+        <div class="sidebar-brand-icon rotate-n-15">
+            <i class="fas fa-laugh-wink"></i>
+        </div>
+        <div class="sidebar-brand-text mx-3"> HRConnect </div>
+    </a>
+
+    <!-- Divider -->
+    <hr class="sidebar-divider my-0">
+     <li class="nav-item user-info" *ngIf="currentUserInformation">
         <div class="sidebar-user d-flex flex-column align-items-center py-3">
             <i class="fas fa-user-circle fa-2x mb-2"></i>
             <div class="font-weight-bold">{{ currentUserInformation.prenom }} {{ currentUserInformation.nom }}</div>
@@ -11,15 +22,6 @@
             </button>
         </div>
     </li>
-    <!-- Sidebar - Brand -->
-    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="#">
-        <div class="sidebar-brand-icon rotate-n-15">
-            <i class="fas fa-laugh-wink"></i>
-        </div>
-        <div class="sidebar-brand-text mx-3"> HRConnect </div>
-    </a>
-
-    <!-- Divider -->
     <hr class="sidebar-divider my-0">
 
     <!-- Nav Item - Dashboard -->
@@ -91,6 +93,27 @@
                 <a class="collapse-item" href="/demandes/conge/create">
                     <i class="fas fa-fw fa-plus"></i>
                     <span>Nouveau congé</span>
+                </a>
+            </div>
+        </div>
+    </li>
+
+    <!-- Nav Item - Formations Collapse Menu -->
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseFormations" aria-expanded="false" aria-controls="collapseFormations">
+            <i class="fas fa-fw fa-graduation-cap"></i>
+            <span>Formations</span>
+            <i class="fas fa-fw fa-caret-down"></i>
+        </a>
+        <div id="collapseFormations" class="collapse" aria-labelledby="headingFormations" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <a class="collapse-item" href="/demandes/formation">
+                    <i class="fas fa-fw fa-list"></i>
+                    <span>Liste des formations</span>
+                </a>
+                <a class="collapse-item" href="/demandes/formation/create">
+                    <i class="fas fa-fw fa-plus"></i>
+                    <span>Nouvelle formation</span>
                 </a>
             </div>
         </div>
