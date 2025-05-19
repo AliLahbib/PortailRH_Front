@@ -1,0 +1,25 @@
+<div *ngIf="loading">Chargement...</div>
+<div *ngIf="!loading">
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Date début</th>
+        <th>Date fin</th>
+        <th>Statut</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let demande of demandes">
+        <td>{{ demande.id }}</td>
+        <td>{{ demande.dateDebut | date }}</td>
+        <td>{{ demande.dateFin | date }}</td>
+        <td>{{ demande.statut }}</td>
+        <td>
+          <button class="btn btn-primary btn-sm" (click)="editDemande(demande.id)">Éditer</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

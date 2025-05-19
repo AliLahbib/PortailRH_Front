@@ -16,6 +16,8 @@ import { AuthGuard } from './guards/auth.guard';
 import { EditDemandeAutorisationComponent } from './components/demandes/autorisation/edit-demande-autorisation/edit-demande-autorisation.component';
 import { ListDemandeAutorisationComponent } from './components/demandes/autorisation/list-demande-autorisation/list-demande-autorisation.component';
 import { CreateUserComponent } from './components/users/create-user/create-user.component';
+import { ListDemandeCongeComponent } from './components/demandes/conge/list-demande-conge/list-demande-conge.component';
+import { EditDemandeCongeComponent } from './components/demandes/conge/edit-demande-conge/edit-demande-conge.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent, canActivate: [AuthGuard] },
@@ -29,8 +31,10 @@ const routes: Routes = [
   { path: 'demandes/edit/:id', component: EditDemandeComponent, canActivate: [AuthGuard] },
   { path: 'demandes/autorisation', component: ListDemandeAutorisationComponent },
   { path: 'demandes/autorisation/edit/:id', component: EditDemandeAutorisationComponent },
-  { path: 'demandes/autorisation/create', component: EditDemandeAutorisationComponent }
-  ,
+  { path: 'demandes/autorisation/create', component: EditDemandeAutorisationComponent },
+  { path: 'demandes/conge', component: ListDemandeCongeComponent, canActivate: [AuthGuard] },
+  { path: 'demandes/conge/edit/:id', component: EditDemandeCongeComponent, canActivate: [AuthGuard] },
+  { path: 'demandes/conge/create', component: EditDemandeCongeComponent, canActivate: [AuthGuard] },
 
   {
     path: 'departements',

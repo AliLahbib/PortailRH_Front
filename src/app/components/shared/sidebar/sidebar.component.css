@@ -26,6 +26,25 @@
   overflow-y: auto;
 }
 
+/* Ajout d'un peu de style pour la section user-info du sidebar */
+.user-info {
+  background: rgba(255,255,255,0.08);
+  border-radius: 8px;
+  margin: 10px 15px 20px 15px;
+  padding: 10px 0 10px 0;
+  text-align: center;
+}
+.sidebar-user .fa-user-circle {
+  color: #fff;
+}
+.sidebar-user .font-weight-bold {
+  font-size: 1.1em;
+}
+.sidebar-user .small {
+  font-size: 0.95em;
+  color: #e0e0e0;
+}
+
 /* Responsive: Quand la largeur de l'écran est petite (mobile) */
 @media (max-width: 768px) {
   .sidebar {

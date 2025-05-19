@@ -1,4 +1,16 @@
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+    <!-- User Info -->
+    <li class="nav-item user-info" *ngIf="currentUserInformation">
+        <div class="sidebar-user d-flex flex-column align-items-center py-3">
+            <i class="fas fa-user-circle fa-2x mb-2"></i>
+            <div class="font-weight-bold">{{ currentUserInformation.prenom }} {{ currentUserInformation.nom }}</div>
+            <div class="small">Rôle : {{ currentUserInformation.role }}</div>
+            <div class="small" *ngIf="currentUserInformation.departement">Département : {{ currentUserInformation.departement.nom }}</div>
+            <button class="btn btn-danger btn-sm mt-2" (click)="logout()">
+                <i class="fas fa-sign-out-alt"></i> Déconnexion
+            </button>
+        </div>
+    </li>
     <!-- Sidebar - Brand -->
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="#">
         <div class="sidebar-brand-icon rotate-n-15">
@@ -58,6 +70,27 @@
                 <a class="collapse-item" href="/demandes/autorisation/create">
                     <i class="fas fa-fw fa-plus"></i>
                     <span>Nouvelle autorisation</span>
+                </a>
+            </div>
+        </div>
+    </li>
+
+    <!-- Nav Item - Congés Collapse Menu -->
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseConges" aria-expanded="false" aria-controls="collapseConges">
+            <i class="fas fa-fw fa-calendar-alt"></i>
+            <span>Congés</span>
+            <i class="fas fa-fw fa-caret-down"></i>
+        </a>
+        <div id="collapseConges" class="collapse" aria-labelledby="headingConges" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <a class="collapse-item" href="/demandes/conge">
+                    <i class="fas fa-fw fa-list"></i>
+                    <span>Liste des congés</span>
+                </a>
+                <a class="collapse-item" href="/demandes/conge/create">
+                    <i class="fas fa-fw fa-plus"></i>
+                    <span>Nouveau congé</span>
                 </a>
             </div>
         </div>

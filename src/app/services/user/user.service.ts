@@ -43,6 +43,14 @@ export class UserService {
     return this.http.get<Utilisateur>(`${this.apiUrl}/${id}`)
       .pipe(catchError(this.handleError));
   }
+  getUserByMatricule(matricule: string): Observable<Utilisateur> {
+    return this.http.get<Utilisateur>(`${this.apiUrl}/matricule/${matricule}`)
+      .pipe(catchError(this.handleError));
+  }
+  getUserByEmail(email: string): Observable<Utilisateur> {
+    return this.http.get<Utilisateur>(`${this.apiUrl}/email/${email}`)
+      .pipe(catchError(this.handleError));
+  }
 
   // Créer un nouvel utilisateur
   createUser(userData: any): Observable<Utilisateur> {

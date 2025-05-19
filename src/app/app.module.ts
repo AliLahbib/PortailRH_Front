@@ -23,6 +23,8 @@ import { ChangePasswordComponent } from './components/users/change-password/chan
 import { EditDemandeAutorisationComponent } from './components/demandes/autorisation/edit-demande-autorisation/edit-demande-autorisation.component';
 import { ListDemandeAutorisationComponent } from './components/demandes/autorisation/list-demande-autorisation/list-demande-autorisation.component';
 import { CreateUserComponent } from './components/users/create-user/create-user.component';
+import { EditDemandeCongeComponent } from './components/demandes/conge/edit-demande-conge/edit-demande-conge.component';
+import { ListDemandeCongeComponent } from './components/demandes/conge/list-demande-conge/list-demande-conge.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +42,9 @@ import { CreateUserComponent } from './components/users/create-user/create-user.
     ChangePasswordComponent,
     EditDemandeAutorisationComponent,
     ListDemandeAutorisationComponent,
-    CreateUserComponent
+    CreateUserComponent,
+    EditDemandeCongeComponent,
+    ListDemandeCongeComponent
   ],
   imports: [
     BrowserModule,

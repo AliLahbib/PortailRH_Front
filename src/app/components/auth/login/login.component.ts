@@ -34,8 +34,10 @@ export class LoginComponent implements OnInit {
     if (this.loginForm.valid) {
       const { matricule, password } = this.loginForm.value;
       this.authService.login(matricule, password).subscribe({
-        next: () => {
-          this.router.navigate(['/']);
+        next: (user) => {
+          console.log('Utilisateur connecté:', user);
+          // this.router.navigate(['/']);
+          window.location.href = '/'; // Redirection vers la page d'accueil
         },
         error: (error) => {
           this.errorMessage = 'Matricule ou mot de passe incorrect';
