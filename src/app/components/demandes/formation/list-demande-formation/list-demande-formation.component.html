@@ -1,43 +1,55 @@
 <div class="container mt-4">
-  <h2>Liste des demandes de formation</h2>
-
-  <div *ngIf="loading" class="alert alert-info">Chargement...</div>
-  <div *ngIf="errorMsg" class="alert alert-danger">{{ errorMsg }}</div>
-
-  <table class="table table-bordered table-striped" *ngIf="!loading && demandes.length">
-    <thead>
-      <tr>
-        <th>Intitulé</th>
-        <th>Organisme</th>
-        <th>Durée</th>
-        <th>Objectif</th>
-        <th>Commentaire</th>
-        <th>Justificatif</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let demande of demandes">
-        <td>{{ demande.nomFormation }}</td>
-        <td>{{ demande.organisme }}</td>
-        <td>{{ demande.duree }}</td>
-        <td>{{ demande.objectif }}</td>
-        <td>{{ demande.commentaire }}</td>
-        <td>
-          <a *ngIf="demande.justificatifURL" [href]="demande.justificatifURL" target="_blank">Voir</a>
-        </td>
-        <td>
-          <button class="btn btn-primary btn-sm mr-2" (click)="editDemande(demande.id)">
-            <i class="fas fa-edit"></i> Modifier
-          </button>
-          <button class="btn btn-danger btn-sm" (click)="deleteDemande(demande.id)">
-            <i class="fas fa-trash"></i> Supprimer
-          </button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-  <div *ngIf="!loading && !demandes.length" class="alert alert-warning">
-    Aucune demande de formation trouvée.
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>Liste des demandes de formation</h2>
+    <button class="btn btn-primary" (click)="createDemande()">
+      <i class="fas fa-plus"></i> Nouvelle demande
+    </button>
+  </div>
+  <div class="table-responsive">
+    <table class="table table-striped table-hover">
+      <thead>
+        <tr>
+          <th>utilisateur</th>
+          <th>Intitulé</th>
+          <th>Organisme</th>
+          <th>Durée</th>
+          <th>Objectif</th>
+          <th>Commentaire</th>
+          <th>Justificatif</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngIf="loading">
+          <td colspan="8" class="text-center">
+            <div class="spinner-border text-primary" role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+          </td>
+        </tr>
+        <tr *ngFor="let demande of demandes">
+          <td>{{ demande.utilisateur?.prenom }} {{ demande.utilisateur?.nom }}</td>
+          <td>{{ demande.nomFormation }}</td>
+          <td>{{ demande.organisme }}</td>
+          <td>{{ demande.duree }}</td>
+          <td>{{ demande.objectif }}</td>
+          <td>{{ demande.commentaire }}</td>
+          <td>
+            <a *ngIf="demande.justificatifURL" [href]="demande.justificatifURL" target="_blank">Voir</a>
+          </td>
+          <td>
+            <button class="btn btn-sm btn-primary me-2" (click)="editDemande(demande.id)">
+              <i class="fas fa-edit"></i>
+            </button>
+            <button class="btn btn-sm btn-danger" (click)="deleteDemande(demande.id)">
+              <i class="fas fa-trash"></i>
+            </button>
+          </td>
+        </tr>
+        <tr *ngIf="!loading && demandes.length === 0">
+          <td colspan="8" class="text-center">Aucune demande trouvée</td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </div>

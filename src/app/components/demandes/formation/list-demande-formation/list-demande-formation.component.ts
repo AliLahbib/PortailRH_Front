@@ -59,4 +59,8 @@ export class ListDemandeFormationComponent implements OnInit {
       });
     }
   }
+
+  createDemande(): void { //creat
+    this.router.navigate(['/demandes/formation/create']);
+  }
 }

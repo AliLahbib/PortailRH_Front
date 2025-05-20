@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { DemandeService } from '../../../../services/demandes/demandes/demande.service';
 import { Demande } from '../../../../models/demande';
 import { Router } from '@angular/router';
-
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-list-demandes',
   templateUrl: './list-demandes.component.html',
@@ -15,6 +15,9 @@ export class ListDemandesComponent implements OnInit {
   itemsPerPage: number = 10;
   searchTerm: string = '';
   selectedStatus: string = 'all';
+  loading = false;
+  error = '';
+
 
   constructor(
     private demandeService: DemandeService,
@@ -29,10 +32,12 @@ export class ListDemandesComponent implements OnInit {
     this.demandeService.getDemandes().subscribe(
       (data) => {
         this.demandes = data;
-        console.log("debug demandes ",data)
+        console.log("debug demandes ", data)
         this.filterDemandes();
       },
       (error) => {
+        this.error = 'Erreur lors du chargement des deamndes';
+
         console.error('Erreur lors du chargement des demandes:', error);
       }
     );
@@ -41,7 +46,7 @@ export class ListDemandesComponent implements OnInit {
   filterDemandes(): void {
     this.filteredDemandes = this.demandes.filter(demande => {
       const matchesSearch = demande.typeDemande.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
-                          demande.commentaire.toLowerCase().includes(this.searchTerm.toLowerCase());
+        demande.commentaire.toLowerCase().includes(this.searchTerm.toLowerCase());
       const matchesStatus = this.selectedStatus === 'all' || demande.statut === this.selectedStatus;
       return matchesSearch && matchesStatus;
     });
@@ -79,17 +84,60 @@ export class ListDemandesComponent implements OnInit {
   }
 
   deleteDemande(id: number): void {
-    if (confirm('Êtes-vous sûr de vouloir supprimer cette demande ?')) {
-      this.demandeService.deleteDemande(id).subscribe(
-        () => {
-          this.demandes = this.demandes.filter(d => d.id !== id);
-          this.filterDemandes();
-        },
-        (error) => {
-          console.error('Erreur lors de la suppression:', error);
-        }
-      );
-    }
+    Swal.fire({
+      title: 'Êtes-vous sûr ?',
+      text: "Cette action est irréversible !",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Oui, supprimer !',
+      cancelButtonText: 'Annuler'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.loading = true;
+        this.demandeService.deleteDemande(id).subscribe({
+          next: () => {
+            Swal.fire(
+              'Supprimé !',
+              'L\'utilisateur a été supprimé avec succès.',
+              'success'
+            );
+            this.loadDemandes();
+          },
+          error: (err) => {
+            this.error = 'Erreur lors de la suppression de l\'utilisateur';
+            this.loading = false;
+            if (err.status == 409) {
+              console.error('Erreur d\'intégrité :', err);
+              Swal.fire(
+                'Suppression impossible',
+                'Cet utilisateur est référencé par des demandes',
+                'error'
+              );
+            } else {
+              Swal.fire(
+                'Erreur !',
+                'Une erreur est survenue lors de la suppression.',
+                'error'
+              );
+            }
+          }
+        });
+      }
+    });
+
+    // if (confirm('Êtes-vous sûr de vouloir supprimer cette demande ?')) {
+    //   this.demandeService.deleteDemande(id).subscribe(
+    //     () => {
+    //       this.demandes = this.demandes.filter(d => d.id !== id);
+    //       this.filterDemandes();
+    //     },
+    //     (error) => {
+    //       console.error('Erreur lors de la suppression:', error);
+    //     }
+    //   );
+    // }
   }
 
   addDemande(): void {

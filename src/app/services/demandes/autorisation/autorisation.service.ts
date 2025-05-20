@@ -3,6 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 import { AuthService } from '../../../services/auth.service';
+import { DemandeAutorisation } from 'src/app/models/demande-autorisation';
+import { Demande } from 'src/app/models/demande';
 @Injectable({
   providedIn: 'root'
 })
@@ -14,7 +16,7 @@ export class AutorisationService {
   getDemandeAutorisation(id: number): Observable<any> {
     return this.http.get(`${this.apiUrl}/${id}`);
   }
-  getAllDemandes(): Observable<any[]> {
+  getAllDemandes(): Observable<Demande[]> {
     return this.http.get<any[]>(this.apiUrl);
   }
 

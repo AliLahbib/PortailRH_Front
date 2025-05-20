@@ -1,25 +1,55 @@
-<div *ngIf="loading">Chargement...</div>
-<div *ngIf="!loading">
-  <table class="table table-bordered">
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>Date début</th>
-        <th>Date fin</th>
-        <th>Statut</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let demande of demandes">
-        <td>{{ demande.id }}</td>
-        <td>{{ demande.dateDebut | date }}</td>
-        <td>{{ demande.dateFin | date }}</td>
-        <td>{{ demande.statut }}</td>
-        <td>
-          <button class="btn btn-primary btn-sm" (click)="editDemande(demande.id)">Éditer</button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+<div class="container mt-4">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>Liste des demandes de congé</h2>
+    <button class="btn btn-primary" (click)="createDemande()">
+      <i class="fas fa-plus"></i> Nouvelle demande
+    </button>
+  </div>
+  <div class="table-responsive">
+    <table class="table table-striped table-hover">
+      <thead>
+        <tr>
+          <th>utilisateur</th>
+          <th>Date début</th>
+          <th>Date fin</th>
+          <th>Statut</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngIf="loading">
+          <td colspan="5" class="text-center">
+            <div class="spinner-border text-primary" role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+          </td>
+        </tr>
+        <tr *ngFor="let demande of demandes">
+          <td>{{ demande.utilisateur?.prenom }} {{ demande.utilisateur?.nom }}</td>
+          <td>{{ demande.dateDebut | date:'dd/MM/yyyy' }}</td>
+          <td>{{ demande.dateFin | date:'dd/MM/yyyy' }}</td>
+          <td>
+            <span [ngClass]="{
+              'badge bg-warning': demande.statut === 'EN_ATTENTE',
+              'badge bg-success': demande.statut === 'APPROUVE',
+              'badge bg-danger': demande.statut === 'REJETE'
+            }">
+              {{ demande.statut }}
+            </span>
+          </td>
+          <td>
+            <button class="btn btn-sm btn-primary me-2" (click)="editDemande(demande.id)">
+              <i class="fas fa-edit"></i>
+            </button>
+            <button class="btn btn-sm btn-danger" (click)="deleteDemande(demande.id)">
+              <i class="fas fa-trash"></i>
+            </button>
+          </td>
+        </tr>
+        <tr *ngIf="!loading && demandes.length === 0">
+          <td colspan="5" class="text-center">Aucune demande trouvée</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </div>

@@ -54,8 +54,9 @@ export class AuthService {
 
   logout() {
     // supprimer l'utilisateur du localStorage
-    localStorage.removeItem('currentUser');
     localStorage.removeItem('User');
+    localStorage.removeItem('currentUser');
+    
     this.currentUserSubject.next(null);
     this.currentUserInformationSubject.next(null); // MAJ du nouveau subject
   }

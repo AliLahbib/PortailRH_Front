@@ -20,13 +20,17 @@ export class ListDemandeAutorisationComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    console.log("debug user ", this.authService.getCurentUser())
     this.loadDemandes();
   }
 
   loadDemandes(): void {
-    if (this.authService.getCurentUser().role in ["ADMIN","CHEF"]) {
+    console.log("debug role ", this.authService.getCurentUser().role)
+    if (this.authService.getCurentUser().role == "ADMIN" || this.authService.getCurentUser().role == "CHEF") {
       this.autorisationService.getAllDemandes().subscribe(
         data => {
+          console.log("debug admin demandes ", data)
+
           this.demandes = data;
           this.loading = false;
         },
@@ -35,13 +39,16 @@ export class ListDemandeAutorisationComponent implements OnInit {
           this.loading = false;
         }
       );
-    }else {
+    } else {
       this.autorisationService.getDemandesByUtilisateur(this.authService.getCurentUser().id).subscribe(
         data => {
+          
           this.demandes = data;
+          console.log("debug employe demandes ", this.demandes)
+
           this.loading = false;
         },
-        error => {  
+        error => {
           this.toastr.error('Erreur lors du chargement des demandes');
           this.loading = false;
         }
@@ -64,17 +71,28 @@ export class ListDemandeAutorisationComponent implements OnInit {
   }
 
   deleteDemande(id: number): void {
-    if (confirm('Êtes-vous sûr de vouloir supprimer cette demande ?')) {
-      this.autorisationService.deleteDemandeAutorisation(id).subscribe(
-        () => {
-          this.toastr.success('Demande supprimée avec succès');
-          this.loadDemandes();
-        },
-        error => {
-          this.toastr.error('Erreur lors de la suppression de la demande');
+    import('sweetalert2').then(Swal => {
+      Swal.default.fire({
+        title: 'Êtes-vous sûr ?',
+        text: 'Cette action est irréversible !',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Oui, supprimer !',
+        cancelButtonText: 'Annuler'
+      }).then((result: any) => {
+        if (result.isConfirmed) {
+          this.autorisationService.deleteDemandeAutorisation(id).subscribe(
+            () => {
+              Swal.default.fire('Supprimé !', 'La demande a été supprimée.', 'success');
+              this.loadDemandes();
+            },
+            () => Swal.default.fire('Erreur', 'Erreur lors de la suppression de la demande', 'error')
+          );
         }
-      );
-    }
+      });
+    });
   }
 
   createDemande(): void {

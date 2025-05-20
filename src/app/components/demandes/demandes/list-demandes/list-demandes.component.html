@@ -34,6 +34,7 @@
       <thead>
         <tr>
           <th>ID</th>
+          <th>Utilisateur</th>
           <th>Type</th>
           <th>Date de création</th>
           <th>Statut</th>
@@ -44,6 +45,7 @@
       <tbody>
         <tr *ngFor="let demande of paginatedDemandes">
           <td>{{demande.id}}</td>
+          <td>{{demande.utilisateur.prenom}} {{demande.utilisateur.nom}}</td>
           <td>{{demande.typeDemande}}</td>
           <td>{{demande.dateCreation | date:'dd/MM/yyyy'}}</td>
           <td>
