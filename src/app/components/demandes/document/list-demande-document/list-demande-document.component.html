@@ -12,10 +12,10 @@
         <tr>
           <th>utilisateur</th>
 
-          <th>Date</th>
-          <th>Heure début</th>
+          <!-- <th>Date</th> -->
+          <!-- <th>Heure début</th>
           <th>Heure fin</th>
-          <th>Raison</th>
+          <th>Raison</th> -->
           <th>Statut</th>
           <th>Actions</th>
         </tr>
@@ -31,10 +31,10 @@
         <tr *ngFor="let demande of demandes">
           <td>{{ demande.utilisateur.prenom }} {{ demande.utilisateur.nom }}</td>
 
-          <td>{{ demande.dateAutorisation | date:'dd/MM/yyyy' }}</td>
+          <!-- <td>{{ demande.dateAutorisation | date:'dd/MM/yyyy' }}</td>
           <td>{{ demande.heureDebut }}</td>
           <td>{{ demande.heureFin }}</td>
-          <td>{{ demande.raison }}</td>
+          <td>{{ demande.raison }}</td> -->
           <td>
             <span [ngClass]="{
               'badge bg-warning': demande.statut === 'EN_ATTENTE',

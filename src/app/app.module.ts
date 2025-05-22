@@ -27,6 +27,10 @@ import { EditDemandeCongeComponent } from './components/demandes/conge/edit-dema
 import { ListDemandeCongeComponent } from './components/demandes/conge/list-demande-conge/list-demande-conge.component';
 import { ListDemandeFormationComponent } from './components/demandes/formation/list-demande-formation/list-demande-formation.component';
 import { EditDemandeFormationComponent } from './components/demandes/formation/edit-demande-formation/edit-demande-formation.component';
+import { EditDemandeMutationComponent } from './components/demandes/mutation/edit-demande-mutation/edit-demande-mutation.component';
+import { ListDemandeMutationComponent } from './components/demandes/mutation/list-demande-mutation/list-demande-mutation.component';
+import { EditDemandeDocumentComponent } from './components/demandes/document/edit-demande-document/edit-demande-document.component';
+import { ListDemandeDocumentComponent } from './components/demandes/document/list-demande-document/list-demande-document.component';
 
 @NgModule({
   declarations: [
@@ -48,7 +52,11 @@ import { EditDemandeFormationComponent } from './components/demandes/formation/e
     EditDemandeCongeComponent,
     ListDemandeCongeComponent,
     ListDemandeFormationComponent,
-    EditDemandeFormationComponent
+    EditDemandeFormationComponent,
+    EditDemandeMutationComponent,
+    ListDemandeMutationComponent,
+    EditDemandeDocumentComponent,
+    ListDemandeDocumentComponent
   ],
   imports: [
     BrowserModule,

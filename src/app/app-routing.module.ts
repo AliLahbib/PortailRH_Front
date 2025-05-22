@@ -1,4 +1,3 @@
-// src/app/app-routing.module.ts
 
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
@@ -20,7 +19,10 @@ import { ListDemandeCongeComponent } from './components/demandes/conge/list-dema
 import { EditDemandeCongeComponent } from './components/demandes/conge/edit-demande-conge/edit-demande-conge.component';
 import { ListDemandeFormationComponent } from './components/demandes/formation/list-demande-formation/list-demande-formation.component';
 import { EditDemandeFormationComponent } from './components/demandes/formation/edit-demande-formation/edit-demande-formation.component';
-
+import { ListDemandeMutationComponent } from './components/demandes/mutation/list-demande-mutation/list-demande-mutation.component';
+import { EditDemandeMutationComponent } from './components/demandes/mutation/edit-demande-mutation/edit-demande-mutation.component';
+import { EditDemandeDocumentComponent } from './components/demandes/document/edit-demande-document/edit-demande-document.component';
+import { ListDemandeDocumentComponent } from './components/demandes/document/list-demande-document/list-demande-document.component';
 const routes: Routes = [
   { path: '', component: HomeComponent, canActivate: [AuthGuard] },
   { path: 'login', component: LoginComponent },
@@ -40,6 +42,12 @@ const routes: Routes = [
   { path: 'demandes/formation', component: ListDemandeFormationComponent, canActivate: [AuthGuard] },
   { path: 'demandes/formation/edit/:id', component: EditDemandeFormationComponent, canActivate: [AuthGuard] },
   { path: 'demandes/formation/create', component: EditDemandeFormationComponent, canActivate: [AuthGuard] },
+  { path: 'demandes/mutation', component: ListDemandeMutationComponent, canActivate: [AuthGuard] },
+  { path: 'demandes/mutation/edit/:id', component: EditDemandeMutationComponent, canActivate: [AuthGuard] },
+  { path: 'demandes/mutation/create', component: EditDemandeMutationComponent, canActivate: [AuthGuard] },
+  { path: 'demandes/document', component: ListDemandeDocumentComponent, canActivate: [AuthGuard] },
+  { path: 'demandes/document/edit/:id', component: EditDemandeDocumentComponent, canActivate: [AuthGuard] },
+  { path: 'demandes/document/create', component: EditDemandeDocumentComponent, canActivate: [AuthGuard] },
 
   {
     path: 'departements',
@@ -50,7 +58,7 @@ const routes: Routes = [
       { path: 'edit/:id', component: EditDepartementComponent }
     ]
   },
-  { path: '**', redirectTo: '' }, // Catch-all (404)
+  { path: '**', redirectTo: '' }, 
 ];
 
 @NgModule({

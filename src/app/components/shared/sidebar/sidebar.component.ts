@@ -23,8 +23,8 @@ export class SidebarComponent implements OnInit {
       this.currentUserInformation = userInfo;
     });
     $('#sidebarToggle').on('click', function () {
-      $('#accordionSidebar').toggleClass('toggled');  // Ajoute ou enlève la classe 'toggled' au sidebar
-      $('body').toggleClass('sidebar-toggled'); // Optionnel, pour gérer le décalage du contenu principal
+      $('#accordionSidebar').toggleClass('toggled'); 
+      $('body').toggleClass('sidebar-toggled');
     });
   }
 

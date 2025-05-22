@@ -16,14 +16,14 @@ import Swal from 'sweetalert2';
 export class EditUserComponent implements OnInit {
 
   userId: number;
-  userForm: FormGroup;  // Formulaire réactif
+  userForm: FormGroup;  
   loading = false;
   error = '';
   departments: Departement[] = [];
   roles = Object.values(RoleEnum);
 
   constructor(
-    private fb: FormBuilder, // Injection de FormBuilder
+    private fb: FormBuilder, 
     private route: ActivatedRoute,
     private router: Router,
     private userService: UserService,

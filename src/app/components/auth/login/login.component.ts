@@ -24,7 +24,6 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // Si l'utilisateur est déjà connecté, rediriger vers la page d'accueil
     if (this.authService.isLoggedIn()) {
       this.router.navigate(['/']);
     }
@@ -36,8 +35,7 @@ export class LoginComponent implements OnInit {
       this.authService.login(matricule, password).subscribe({
         next: (user) => {
           console.log('Utilisateur connecté:', user);
-          // this.router.navigate(['/']);
-          window.location.href = '/'; // Redirection vers la page d'accueil
+          window.location.href = '/'; 
         },
         error: (error) => {
           this.errorMessage = 'Matricule ou mot de passe incorrect';

@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FormationService } from 'src/app/services/demandes/formation/formation.service';
-import { DemandeFormation } from 'src/app/models/demande-formation';
+import { MutationService } from 'src/app/services/demandes/mutation/mutation.service';
+import { DemandeMutation } from 'src/app/models/demande-mutation';
 
 @Component({
-  selector: 'app-edit-demande-formation',
-  templateUrl: './edit-demande-formation.component.html',
-  styleUrls: ['./edit-demande-formation.component.css']
+  selector: 'app-edit-demande-mutation',
+  templateUrl: './edit-demande-mutation.component.html',
+  styleUrls: ['./edit-demande-mutation.component.css']
 })
-export class EditDemandeFormationComponent implements OnInit {
+export class EditDemandeMutationComponent implements OnInit {
   demandeForm: FormGroup;
   isEditMode = false;
   demandeId?: number;
@@ -18,15 +18,14 @@ export class EditDemandeFormationComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private formationService: FormationService,
+    private mutationService: MutationService,
     private route: ActivatedRoute,
     private router: Router
   ) {
     this.demandeForm = this.fb.group({
-      nomFormation: ['', Validators.required],
-      organisme: ['', Validators.required],
-      duree: ['', Validators.required],
-      objectif: ['', Validators.required],
+      serviceActuel: ['', Validators.required],
+      serviceSouhaite: ['', Validators.required],
+      motif: ['', Validators.required],
       commentaire: [''],
       justificatifURL: ['']
     });
@@ -37,7 +36,7 @@ export class EditDemandeFormationComponent implements OnInit {
     if (this.demandeId) {
       this.isEditMode = true;
       this.loading = true;
-      this.formationService.getDemandeFormationById(this.demandeId).subscribe({
+      this.mutationService.getDemandeMutationById(this.demandeId).subscribe({
         next: (demande) => {
           this.demandeForm.patchValue(demande);
           this.loading = false;
@@ -53,7 +52,7 @@ export class EditDemandeFormationComponent implements OnInit {
   onSubmit(): void {
     if (this.demandeForm.invalid) return;
     this.loading = true;
-    const demande: DemandeFormation = this.demandeForm.value;
+    const demande: DemandeMutation = this.demandeForm.value;
     import('sweetalert2').then(Swal => {
       Swal.default.fire({
         title: 'Confirmer',
@@ -67,10 +66,10 @@ export class EditDemandeFormationComponent implements OnInit {
       }).then((result: any) => {
         if (result.isConfirmed) {
           if (this.isEditMode && this.demandeId) {
-            this.formationService.updateDemandeFormation(this.demandeId, demande).subscribe({
+            this.mutationService.updateDemandeMutation(this.demandeId, demande).subscribe({
               next: () => {
-                Swal.default.fire('Succès', 'Demande de formation modifiée', 'success');
-                this.router.navigate(['/demandes/formation']);
+                Swal.default.fire('Succès', 'Demande de mutation modifiée', 'success');
+                this.router.navigate(['/demandes/mutation']);
               },
               error: () => {
                 Swal.default.fire('Erreur', 'Erreur lors de la modification.', 'error');
@@ -78,10 +77,10 @@ export class EditDemandeFormationComponent implements OnInit {
               }
             });
           } else {
-            this.formationService.createDemandeFormation(demande).subscribe({
+            this.mutationService.createDemandeMutation(demande).subscribe({
               next: () => {
-                Swal.default.fire('Succès', 'Demande de formation créée', 'success');
-                this.router.navigate(['/demandes/formation']);
+                Swal.default.fire('Succès', 'Demande de mutation créée', 'success');
+                this.router.navigate(['/demandes/mutation']);
               },
               error: () => {
                 Swal.default.fire('Erreur', 'Erreur lors de la création.', 'error');

@@ -15,8 +15,11 @@ export class ListDemandesComponent implements OnInit {
   itemsPerPage: number = 10;
   searchTerm: string = '';
   selectedStatus: string = 'all';
+  selectedType: string = 'all';
   loading = false;
   error = '';
+  minDate: string = '';
+  maxDate: string = '';
 
 
   constructor(
@@ -45,10 +48,21 @@ export class ListDemandesComponent implements OnInit {
 
   filterDemandes(): void {
     this.filteredDemandes = this.demandes.filter(demande => {
-      const matchesSearch = demande.typeDemande.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
-        demande.commentaire.toLowerCase().includes(this.searchTerm.toLowerCase());
+      const matchesSearch = demande.typeDemande.toLowerCase().includes(
+        this.searchTerm.toLowerCase()) ||
+        demande.commentaire.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+        demande.statut.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+        (demande.utilisateur.prenom + ' ' + demande.utilisateur.nom).toLowerCase().includes(this.searchTerm.toLowerCase());
       const matchesStatus = this.selectedStatus === 'all' || demande.statut === this.selectedStatus;
-      return matchesSearch && matchesStatus;
+      const matchesType = this.selectedType === 'all' || demande.typeDemande === this.selectedType;
+      let matchesDate = true;
+      if (this.minDate) {
+        matchesDate = matchesDate && (new Date(demande.dateCreation) >= new Date(this.minDate));
+      }
+      if (this.maxDate) {
+        matchesDate = matchesDate && (new Date(demande.dateCreation) <= new Date(this.maxDate));
+      }
+      return matchesSearch && matchesStatus && matchesType && matchesDate;
     });
   }
 
@@ -57,6 +71,14 @@ export class ListDemandesComponent implements OnInit {
   }
 
   onStatusChange(): void {
+    this.filterDemandes();
+  }
+
+  onTypeChange(): void {
+    this.filterDemandes();
+  }
+
+  onDateChange(): void {
     this.filterDemandes();
   }
 
@@ -127,17 +149,7 @@ export class ListDemandesComponent implements OnInit {
       }
     });
 
-    // if (confirm('Êtes-vous sûr de vouloir supprimer cette demande ?')) {
-    //   this.demandeService.deleteDemande(id).subscribe(
-    //     () => {
-    //       this.demandes = this.demandes.filter(d => d.id !== id);
-    //       this.filterDemandes();
-    //     },
-    //     (error) => {
-    //       console.error('Erreur lors de la suppression:', error);
-    //     }
-    //   );
-    // }
+
   }
 
   addDemande(): void {

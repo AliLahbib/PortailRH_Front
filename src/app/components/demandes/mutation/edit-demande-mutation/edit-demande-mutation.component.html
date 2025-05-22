@@ -1,0 +1,51 @@
+<div class="container mt-4">
+  <h2>{{ isEditMode ? 'Modifier' : 'Créer' }} une demande de mutation</h2>
+  <form [formGroup]="demandeForm" (ngSubmit)="onSubmit()" class="mt-4">
+    <div class="row">
+      <div class="col-md-6 mb-3">
+        <label for="serviceActuel" class="form-label">Service actuel</label>
+        <input type="text" class="form-control" id="serviceActuel" formControlName="serviceActuel">
+        <div class="invalid-feedback" *ngIf="demandeForm.get('serviceActuel')?.invalid && demandeForm.get('serviceActuel')?.touched">
+          Le service actuel est requis
+        </div>
+      </div>
+      <div class="col-md-6 mb-3">
+        <label for="serviceSouhaite" class="form-label">Service souhaité</label>
+        <input type="text" class="form-control" id="serviceSouhaite" formControlName="serviceSouhaite">
+        <div class="invalid-feedback" *ngIf="demandeForm.get('serviceSouhaite')?.invalid && demandeForm.get('serviceSouhaite')?.touched">
+          Le service souhaité est requis
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12 mb-3">
+        <label for="motif" class="form-label">Motif</label>
+        <textarea class="form-control" id="motif" formControlName="motif" rows="2"></textarea>
+        <div class="invalid-feedback" *ngIf="demandeForm.get('motif')?.invalid && demandeForm.get('motif')?.touched">
+          Le motif est requis
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6 mb-3">
+        <label for="commentaire" class="form-label">Commentaire</label>
+        <input type="text" class="form-control" id="commentaire" formControlName="commentaire">
+      </div>
+      <div class="col-md-6 mb-3">
+        <label for="justificatifURL" class="form-label">Justificatif (URL)</label>
+        <input type="text" class="form-control" id="justificatifURL" formControlName="justificatifURL">
+      </div>
+    </div>
+    <div class="row mt-4">
+      <div class="col-12">
+        <button type="submit" class="btn btn-primary" [disabled]="!demandeForm.valid || loading">
+          {{ isEditMode ? 'Mettre à jour' : 'Créer' }}
+        </button>
+        <button type="button" class="btn btn-secondary ms-2" [routerLink]="['/demandes/mutation']">
+          Annuler
+        </button>
+      </div>
+    </div>
+    <div *ngIf="errorMsg" class="alert alert-danger mt-3">{{ errorMsg }}</div>
+  </form>
+</div>

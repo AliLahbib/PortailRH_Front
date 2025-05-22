@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { DemandeService } from 'src/app/services/demandes/demandes/demande.service'; // Adjust path if needed
-import { Demande, StatutDemande } from 'src/app/models/demande';  // Adjust path if needed
+import { DemandeService } from 'src/app/services/demandes/demandes/demande.service'; 
+import { Demande, StatutDemande } from 'src/app/models/demande';  
 import Swal from 'sweetalert2';
 
 @Component({
@@ -14,7 +14,7 @@ export class EditDemandeComponent implements OnInit {
   demandeForm: FormGroup;
   demande: Demande | null = null;
   demandeId: number;
-  statuts = Object.values(StatutDemande); // Get possible statuses
+  statuts = Object.values(StatutDemande); 
   loading = false;
   error = '';
 
@@ -71,7 +71,7 @@ export class EditDemandeComponent implements OnInit {
           showConfirmButton: false,
           timer: 1500
         }).then(() => {
-          this.router.navigate(['/demandes']); // Redirect to the list
+          this.router.navigate(['/demandes']); 
         });
       },
       error: (err) => {

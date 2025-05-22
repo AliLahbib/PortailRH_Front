@@ -16,7 +16,7 @@ import Swal from 'sweetalert2';
 export class CreateUserComponent implements OnInit {
 
   userId: number;
-  userForm: FormGroup;  // Formulaire réactif
+  userForm: FormGroup;  
   loading = false;
   error = '';
   departments: Departement[] = [];

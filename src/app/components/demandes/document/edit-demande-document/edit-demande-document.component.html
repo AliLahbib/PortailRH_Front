@@ -1,0 +1,24 @@
+<div class="container mt-4">
+  <h2>{{ isEditMode ? 'Éditer' : 'Créer' }} une demande de document</h2>
+  <form [formGroup]="demandeForm" (ngSubmit)="onSubmit()">
+    <div class="mb-3">
+      <label for="typeDocument" class="form-label">Type de document</label>
+      <select id="typeDocument" class="form-control" formControlName="typeDocument" required>
+        <option value="" disabled selected>Choisir un type</option>
+        <option *ngFor="let opt of typeDocumentOptions" [value]="opt.value">{{ opt.label }}</option>
+      </select>
+    </div>
+    <div class="mb-3">
+      <label for="commentaire" class="form-label">Commentaire</label>
+      <textarea id="commentaire" class="form-control" formControlName="commentaire"></textarea>
+    </div>
+    <div class="mb-3">
+      <label for="justificatifURL" class="form-label">Justificatif URL</label>
+      <input id="justificatifURL" type="text" class="form-control" formControlName="justificatifURL">
+    </div>
+    <button type="submit" class="btn btn-primary m-1" [disabled]="demandeForm.invalid || isLoading">
+      {{ isEditMode ? 'Mettre à jour' : 'Créer' }}
+    </button>
+    <button type="button" class="btn btn-secondary ms-2" (click)="onCancel()">Annuler</button>
+  </form>
+</div>

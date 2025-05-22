@@ -45,7 +45,6 @@ export class EditDemandeAutorisationComponent implements OnInit {
   loadDemande(): void {
     this.autorisationService.getDemandeAutorisation(this.demandeId).subscribe(
       data => {
-        // Formatage de la date pour l'input de type date
         const date = new Date(data.dateAutorisation);
         const formattedDate = this.formatDateForInput(date);
         
@@ -72,30 +71,38 @@ export class EditDemandeAutorisationComponent implements OnInit {
   }
 
   onSubmit(): void {
-    if (this.demandeForm.valid) {
-      const formData = this.demandeForm.value;
-      
-      if (this.isEditMode) {
-        this.autorisationService.updateDemandeAutorisation(this.demandeId, formData).subscribe(
-          response => {
-            this.toastr.success('Demande mise à jour avec succès');
-            this.router.navigate(['/demandes/autorisation']);
-          },
-          error => {
-            this.toastr.error('Erreur lors de la mise à jour de la demande');
+    if (this.demandeForm.invalid) return;
+    import('sweetalert2').then(Swal => {
+      Swal.default.fire({
+        title: 'Confirmer',
+        text: this.isEditMode ? 'Voulez-vous vraiment modifier cette demande ?' : 'Voulez-vous vraiment créer cette demande ?',
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Oui',
+        cancelButtonText: 'Annuler'
+      }).then((result: any) => {
+        if (result.isConfirmed) {
+          if (this.isEditMode && this.demandeId) {
+            this.autorisationService.updateDemandeAutorisation(this.demandeId, this.demandeForm.value).subscribe(
+              () => {
+                Swal.default.fire('Succès', 'Demande d\'autorisation modifiée', 'success');
+                this.router.navigate(['/demandes/autorisation']);
+              },
+              () => Swal.default.fire('Erreur', 'Erreur lors de la modification.', 'error')
+            );
+          } else {
+            this.autorisationService.createDemandeAutorisation(this.demandeForm.value).subscribe(
+              () => {
+                Swal.default.fire('Succès', 'Demande d\'autorisation créée', 'success');
+                this.router.navigate(['/demandes/autorisation']);
+              },
+              () => Swal.default.fire('Erreur', 'Erreur lors de la création.', 'error')
+            );
           }
-        );
-      } else {
-        this.autorisationService.createDemandeAutorisation(formData).subscribe(
-          response => {
-            this.toastr.success('Demande créée avec succès');
-            this.router.navigate(['/demandes/autorisation']);
-          },
-          error => {
-            this.toastr.error('Erreur lors de la création de la demande');
-          }
-        );
-      }
-    }
+        }
+      });
+    });
   }
 }

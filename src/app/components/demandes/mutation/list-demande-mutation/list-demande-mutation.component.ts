@@ -1,51 +1,51 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { CongeService } from '../../../../services/demandes/conge/conge.service';
+import { MutationService } from 'src/app/services/demandes/mutation/mutation.service';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from 'src/app/services/auth.service';
+import { DemandeMutation } from 'src/app/models/demande-mutation';
+
 @Component({
-  selector: 'app-list-demande-conge',
-  templateUrl: './list-demande-conge.component.html',
-  //   styleUrls: ['./list-demande-conge.component.css']
+  selector: 'app-list-demande-mutation',
+  templateUrl: './list-demande-mutation.component.html',
+  styleUrls: ['./list-demande-mutation.component.css']
 })
-export class ListDemandeCongeComponent implements OnInit {
-  demandes: any[] = [];
-  loading: boolean = true;
+export class ListDemandeMutationComponent implements OnInit {
+  demandes: DemandeMutation[] = [];
+  loading = true;
 
   constructor(
-    private congeService: CongeService,
+    private mutationService: MutationService,
     private router: Router,
-    private authService: AuthService,
-
-    private toastr: ToastrService
-  ) { }
+    private toastr: ToastrService,
+    private authService: AuthService
+  ) {}
 
   ngOnInit(): void {
-
     this.loadDemandes();
   }
 
   loadDemandes(): void {
-    if (this.authService.getCurentUser().role =="ADMIN" || this.authService.getCurentUser().role == "CHEF") {
-      this.congeService.getAllDemandesConge().subscribe(
+    const user = this.authService.getCurentUser();
+    if (user.role === 'ADMIN' || user.role === 'CHEF') {
+      this.mutationService.getAllDemandesMutation().subscribe(
         data => {
           this.demandes = data;
-          console.log("debug admin/cheff demandes ", this.demandes)
           this.loading = false;
         },
-        error => {
-          this.toastr.error('Erreur lors du chargement des demandes de congé');
+        () => {
+          this.toastr.error('Erreur lors du chargement des demandes de mutation');
           this.loading = false;
         }
       );
-    }else {
-      this.congeService.getDemandesByUtilisateur(this.authService.getCurentUser().id).subscribe(
+    } else {
+      this.mutationService.getDemandesMutationByUtilisateur(user.id).subscribe(
         data => {
           this.demandes = data;
           this.loading = false;
         },
-        error => {
-          this.toastr.error('Erreur lors du chargement des demandes de congé');
+        () => {
+          this.toastr.error('Erreur lors du chargement des demandes de mutation');
           this.loading = false;
         }
       );
@@ -53,11 +53,13 @@ export class ListDemandeCongeComponent implements OnInit {
   }
 
   editDemande(id: number): void {
-    this.router.navigate(['/demandes/conge/edit', id]);
+    this.router.navigate(['/demandes/mutation/edit', id]);
   }
+
   createDemande(): void {
-    this.router.navigate(['/demandes/conge/create']);
+    this.router.navigate(['/demandes/mutation/create']);
   }
+
   deleteDemande(id: number): void {
     import('sweetalert2').then(Swal => {
       Swal.default.fire({
@@ -71,7 +73,7 @@ export class ListDemandeCongeComponent implements OnInit {
         cancelButtonText: 'Annuler'
       }).then((result: any) => {
         if (result.isConfirmed) {
-          this.congeService.deleteDemandeConge(id).subscribe(
+          this.mutationService.deleteDemandeMutation(id).subscribe(
             () => {
               Swal.default.fire('Supprimé !', 'La demande a été supprimée.', 'success');
               this.loadDemandes();
